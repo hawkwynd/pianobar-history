@@ -13,7 +13,7 @@ $masterID           = $_GET['id'];
 $pianobar           = new stdClass(); // init our object
 
 // Some band names need to be set as (band). Expand this list as needed. -sf
-$bandsToFilter = array('Boston', 'Styx', 'Incubus', 'Eagles', 'Kenny Wayne Shepherd');
+$bandsToFilter = array('Boston', 'Styx', 'Incubus', 'Eagles', 'Kenny Wayne Shepherd', 'Journey');
 
 
 /**
@@ -106,7 +106,6 @@ foreach($info->members as $member){
 // to get the correct content from wikipedia...
 
 $wiki = json_decode( wikidefinition($pianobar->artist->name ) );
-
 
 foreach($wiki->query->pages as $wikiResult){
 

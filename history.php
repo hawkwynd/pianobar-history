@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/css/style.css"/>
     <script>
         $(document).ready(function() {
+
+            var info = false;
+
             $('#deviceTable').dataTable({
                 "lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]],
                 pageLength: 10,
@@ -17,14 +20,26 @@
                 columns : [
                     {data: "masterId",
                         "render" : function(data){
+
                             if(data){
+                                 info = false;
                                 return '<a href="#" class="modalLink" id='+data+' >Info</a>';
                             } else{
+                                info = true;
                                 return '';
+
                             }
                         }
                     },
-                    {data : "artist"},
+                    {data : "artist",
+                        "render" : function(data){
+                            if(info) {
+                                return '<a href="#" class="artistLink" id="' + data + '">' + data + '</a>';
+                            }else{
+                                return data;
+                            }
+                    }
+                    },
                     {className: "title" ,  data : "title"},
                     {className : "album" , data : "album"},
                     {data : "genre"},
@@ -65,6 +80,40 @@
                     modal.style.display = "none";
                 }
             }
+
+            // Get just the artist excerpt from Wikipedia
+
+            $(document).on('click', '.artistLink', function() {
+
+                var data = encodeURIComponent($(this).attr('id'));
+                var url  = 'getArtist.php?artist=' + data;
+
+                $.ajax({
+                   type: 'GET',
+                   url : url,
+                    success: function( response ){
+
+                        var content = $.parseJSON( response );
+
+                        $.each(content.query.pages, function(idx, v){
+                            output = v.extract;
+                        });
+
+
+                        console.log( $(output).text() );
+
+                        modal.style.display = "block";
+
+                        $('.content-container').html(  output );
+
+
+                    },
+                    error: function( response ){
+                        alert("fail");
+                    }
+                });
+
+            });
 
 
             // The magic happens here to create a modal and populate it from
@@ -171,7 +220,7 @@
             <th>Genre</th>
             <th>Year</th>
             <th>Label</th>
-            <th>Added</th>
+            <th>Played</th>
             <th>Cover</th>
         </tr>
         </thead>
