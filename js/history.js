@@ -18,14 +18,12 @@ $(document).ready(function() {
         columns : [
             {data: "masterId",
                 "render" : function(data){
-
                     if(data){
                         info = false;
                         return '<a href="#" class="modalLink" id='+data+' >Info</a>';
                     } else{
                         info = true;
                         return '';
-
                     }
                 }
             },
@@ -67,14 +65,9 @@ $(document).ready(function() {
     var modal = document.getElementById('myModal');
     // Get the <span> element that closes the modal
     var fclose = document.getElementsByClassName("close")[0];
-    var lclose = document.getElementsByClassName("close")[1];
 
     // When the user clicks on <span> (x), close the modal
     fclose.onclick = function() {
-        modal.style.display = "none";
-    }
-    // when user clicks the bottom close span, close the modal
-    lclose.onclick = function() {
         modal.style.display = "none";
     }
     // When the user clicks anywhere outside of the modal, close it
@@ -103,9 +96,6 @@ $(document).ready(function() {
                 $.each(content.query.pages, function(idx, v){
                     output = v.extract;
                 });
-
-
-                console.log( $(output).text() );
 
                 modal.style.display = "block";
 
@@ -141,6 +131,7 @@ $(document).ready(function() {
             success: function (output) {
 
                 var content = $.parseJSON(output);
+
                 $('.content-container').append('<h3>'+content.artist.name+'</h3>');
                 $('.content-container').append('<div class="songTitle">Title: ' + songTitle + '</div>');
 
@@ -155,6 +146,7 @@ $(document).ready(function() {
                 if(content.styles) $('.content-container').append('<div class="wiki slant">Style: '+content.styles+'</div>');
                 // Genres
                 if(content.genres) $('.content-container').append('<div class="wiki slant">Genre: '+content.genres+'</div>');
+
 
 
                 // display band extract
@@ -182,8 +174,6 @@ $(document).ready(function() {
 
                     $('.content-container').append(videos);
                 }
-
-
 
                 console.log(content);
             },
