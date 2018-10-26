@@ -1,12 +1,13 @@
 <?php
-
+/**
+ * getArtist.php
+ * Return wikipedia excerpt from query of artist.
+ */
 
 $artist = $_GET['artist'];
 
 echo wikidefinition($artist);
 exit;
-
-
 
 /**
  * @param $s

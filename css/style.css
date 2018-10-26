@@ -1,0 +1,101 @@
+/* history page styling */
+body {
+  font-family: Arial, Tahoma;
+  font-size: 100%; }
+
+th, td {
+  font-size: 100%; }
+
+td a {
+  text-decoration: none;
+  color: #0072a0; }
+
+tfoot td {
+  text-align: center;
+  color: #0072a0; }
+
+.container {
+  margin: 10px 30px; }
+
+.zoom {
+  padding: 0px;
+  transition: transform .2s;
+  /* Animation */
+  width: 70px;
+  margin: 0 0 0 10px; }
+
+img {
+  width: 40px; }
+
+.zoom:hover {
+  transform: scale(3) translate(-20px, 0px); }
+
+/* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+.excerpt, .wiki, .songTitle, .albumTitle, .vTitle, .memberName {
+  margin: 4px 32px;
+  font-size: 95%;
+  line-height: 18px;
+  text-align: justify; }
+
+.excerpt {
+  margin: 5px 32px 5px 50px; }
+
+.vTitle a {
+  text-decoration: none; }
+
+.slant {
+  font-style: italic; }
+
+.memberName, .songTitle, .albumTitle, .videoHeader {
+  font-weight: 700; }
+
+.videoHeader {
+  margin-top: 16px; }
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */ }
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  /* 10% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+  /* Could be more or less, depending on screen size */
+  height: 70%;
+  overflow-y: scroll; }
+
+/* The Close Button */
+.close {
+  color: #8c8c8c;
+  float: right;
+  font-size: 28px;
+  font-weight: normal; }
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer; }
+
+/*# sourceMappingURL=style.css.map */
