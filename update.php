@@ -82,7 +82,7 @@ $updateResult = $collection->updateOne(
                 'catno'         => $catno,
                 'status'        => $id,
                 'label'         => $labels,
-                'coverArt'      => $_POST['coverArt']
+                'coverArt'      => isset($_POST['coverArt']) ? $_POST['coverArt'] : ''
                  ]
     ],
     ['upsert'   => true]

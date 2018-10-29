@@ -109,32 +109,12 @@ $pianobar->artist->members = array();
 foreach($info->members as $member){
 
     $member->name = trim(preg_replace('/\([0-9]\)/', '', $member->name));
-
-    // Get cURL resource for our member image.
-    /*
-    $curl = curl_init();
-    curl_setopt_array($curl,
-        array(
-            CURLOPT_RETURNTRANSFER      => 1,
-            CURLOPT_URL                 => "https://scottybox.tech/pianobar/google-image-search.php?q=".urlencode($member->name),
-            CURLOPT_USERAGENT           => "pianobar/1.1"
-        )
-    );
-    $imgresp   = curl_exec($curl);
-    $imgdata   = json_decode($imgresp, true);
-    $thumb     = '';
-
-    if($imgdata){
-        foreach($imgdata as $memberImage){
-            $thumb = $memberImage['thumb'];
-            $thumbTitle=$memberImage['title'];
-        }
-    }
-*/
     $wiki = json_decode( wikidefinition( $member->name ) );
 
     foreach($wiki->query->pages as $content){
-        $memberContent = strip_tags($content->extract);
+
+        $memberContent = filterWikiContent( strip_tags($content->extract), $member->name);
+
     }
 
      array_push($pianobar->artist->members,  array(
@@ -152,26 +132,23 @@ foreach($info->members as $member){
 $wiki = json_decode( wikidefinition($pianobar->artist->name ) );
 
 foreach($wiki->query->pages as $wikiResult){
-
     $content                    = trim(strip_tags($wikiResult->extract));
     $pianobar->wiki->extract    = $wikiResult->extract;
 
     if( !$content || strpos( $content, 'may refer to:') > 0  || in_array( $pianobar->artist->name, $bandsToFilter)){
-
         $wiki_retry = json_decode( wikidefinition($pianobar->artist->name . " (band)") );
-
         foreach($wiki_retry->query->pages as $content_retry){
             $pianobar->wiki->search         = $pianobar->artist->name ." (band)";
             $content                        = strip_tags($content_retry->extract);
             $pianobar->wiki->extract        = $content_retry->extract;
         }
-
     }else{
         $pianobar->wiki->search  = $pianobar->artist->name;
     }
 
     $pianobar->wiki->notag_content = $content;
 }
+
 
 echo json_encode($pianobar);
 
@@ -196,4 +173,22 @@ function wikidefinition($s) {
     $page = curl_exec($ch);
 
     return($page);
+}
+
+/**
+ * filterWikiContent
+ * @description used to check if the wikipedia search result has a string matching in it and return
+ * something less idiotic than what wikipedia says...
+ * @param $content
+ * @param $memberName
+ * @param string $filter
+ * @return string
+ */
+function filterWikiContent($content, $memberName, $filter="may refer to:"){
+    if( strpos($content,$filter) !== false ){
+        return "The internet (wikipedia) has no relevant info on " .$memberName. ". Guess you are on your own to Google it for yourself, sorry, but I'm a little busy at the moment and don't have time to do everything for you, ya ungrateful, lazy sloth!";
+    }
+
+    return $content;
+
 }

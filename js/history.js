@@ -81,18 +81,12 @@ $(document).ready(function() {
             type: 'GET',
             url : url,
             success: function( response ){
-
                 var content = $.parseJSON( response );
-
                 $.each(content.query.pages, function(idx, v){
                     output = v.extract;
                 });
-
                 modal.style.display = "block";
-
                 $('.content-container').html(  output );
-
-
             },
             error: function( response ){
                 alert("fail");
@@ -112,13 +106,31 @@ $(document).ready(function() {
         var album       = $(this).closest("tr").find(".album").text();
         var songTitle   = $(this).closest("tr").find(".title").text();
         var label       = $(this).closest("tr").find(".label").text();
-        var url         = 'getMaster.php?id='+data;
+        var MasterUrl         = 'getMaster.php?id='+data;
+        var YoutubeUrl  = 'youtube.php?maxResults=3&q='+songTitle;
+
+        var jsonVids = function() {
+                var tmp = null;
+                $.ajax({
+                    type : 'GET',
+                    url : YoutubeUrl,
+                    success: function(videos){
+                        tmp = $.parseJSON(videos);
+                    },
+                    error: function(videos){
+                        //alert("fail");
+                    }
+                });
+                    return tmp;
+        }();
+
+        console.log(jsonVids); // dump our results
 
         modal.style.display = "block";
 
         $.ajax({
             type: 'GET',
-            url: url,
+            url: MasterUrl,
             success: function (output) {
 
                 var content = $.parseJSON(output);
@@ -170,6 +182,9 @@ $(document).ready(function() {
                     $.each(content.artist.videos, function(k,v){
                         videos += '<div class="vTitle"><a href="'+ v.uri +'" target="_blank">' + v.title + '</a></div>';
                     });
+
+
+
 
                     $('.content-container').append(videos);
                 }
