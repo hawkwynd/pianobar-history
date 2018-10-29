@@ -1,56 +1,70 @@
 /* history page styling */
 body {
   font-family: Arial, Tahoma;
-  font-size: 100%; }
+  font-size: 100%;
+}
 
 th, td {
-  font-size: 100%; }
+  font-size: 100%;
+}
 
 td a {
   text-decoration: none;
-  color: #0072a0; }
+  color: #0072a0;
+}
 
 tfoot td {
   text-align: center;
-  color: #0072a0; }
+  color: #0072a0;
+}
 
 .container {
-  margin: 10px 30px; }
+  margin: 10px 30px;
+}
 
 .zoom {
   padding: 0px;
-  transition: transform .2s;
+  transition: transform 0.2s;
   /* Animation */
   width: 70px;
-  margin: 0 0 0 10px; }
+  margin: 0 0 0 10px;
+}
 
-img {
-  width: 40px; }
+.zoom img {
+  width: 40px;
+}
 
 .zoom:hover {
-  transform: scale(3) translate(-20px, 0px); }
+  transform: scale(3) translate(-20px, 0px);
+}
 
 /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 .excerpt, .wiki, .songTitle, .albumTitle, .vTitle, .memberName {
   margin: 4px 32px;
   font-size: 95%;
   line-height: 18px;
-  text-align: justify; }
+  text-align: justify;
+}
 
 .excerpt {
-  margin: 5px 32px 5px 50px; }
+  margin: 5px 32px 5px 50px;
+}
 
 .vTitle a {
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 .slant {
-  font-style: italic; }
+  font-style: italic;
+}
 
 .memberName, .songTitle, .albumTitle, .videoHeader {
-  font-weight: 700; }
+  font-weight: 700;
+}
 
 .videoHeader {
-  margin-top: 16px; }
+  margin-top: 16px;
+}
 
 /* The Modal (background) */
 .modal {
@@ -71,7 +85,8 @@ img {
   background-color: black;
   /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4);
-  /* Black w/ opacity */ }
+  /* Black w/ opacity */
+}
 
 /* Modal Content/Box */
 .modal-content {
@@ -83,19 +98,38 @@ img {
   width: 60%;
   /* Could be more or less, depending on screen size */
   height: 70%;
-  overflow-y: scroll; }
+  overflow-y: scroll;
+}
 
 /* The Close Button */
 .close {
   color: #8c8c8c;
   float: right;
   font-size: 28px;
-  font-weight: normal; }
+  font-weight: normal;
+}
 
 .close:hover,
 .close:focus {
   color: black;
   text-decoration: none;
-  cursor: pointer; }
+  cursor: pointer;
+}
+
+.modalImg img {
+  float: right;
+  margin: 0 0 10px 20px;
+  width: 40%;
+}
+
+.thumbNail {
+  float: left;
+  margin: 0 10px 10px 0;
+}
+
+.memberName {
+  clear: both;
+  margin: 5px 0;
+}
 
 /*# sourceMappingURL=style.css.map */

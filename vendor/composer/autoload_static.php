@@ -4,40 +4,52 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc444a2fb0a912edaec36c83abffaffef
+class ComposerStaticInit72a0c541765ebc31f9238a9d37ae1281
 {
     public static $files = array (
-        'fad373d645dd668e85d44ccf3c38fbd6' => __DIR__ . '/..' . '/guzzlehttp/streams/src/functions.php',
-        '154e0d165f5fe76e8e9695179d0a7345' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'o' => 
+        array (
+            'odannyc\\tests\\' => 14,
+            'odannyc\\GoogleImageSearch\\' => 26,
+        ),
+        'P' => 
+        array (
+            'Psr\\Http\\Message\\' => 17,
+        ),
         'G' => 
         array (
-            'GuzzleHttp\\Subscriber\\Oauth\\' => 28,
-            'GuzzleHttp\\Stream\\' => 18,
-            'GuzzleHttp\\Command\\Guzzle\\' => 26,
-            'GuzzleHttp\\Command\\' => 19,
+            'GuzzleHttp\\Psr7\\' => 16,
+            'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'GuzzleHttp\\Subscriber\\Oauth\\' => 
+        'odannyc\\tests\\' => 
         array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/oauth-subscriber/src',
+            0 => __DIR__ . '/..' . '/odannyc/google-image-search/tests',
         ),
-        'GuzzleHttp\\Stream\\' => 
+        'odannyc\\GoogleImageSearch\\' => 
         array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/streams/src',
+            0 => __DIR__ . '/..' . '/odannyc/google-image-search/src',
         ),
-        'GuzzleHttp\\Command\\Guzzle\\' => 
+        'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle-services/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'GuzzleHttp\\Command\\' => 
+        'GuzzleHttp\\Psr7\\' => 
         array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/command/src',
+            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
+        ),
+        'GuzzleHttp\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
         ),
         'GuzzleHttp\\' => 
         array (
@@ -45,22 +57,11 @@ class ComposerStaticInitc444a2fb0a912edaec36c83abffaffef
         ),
     );
 
-    public static $prefixesPsr0 = array (
-        'D' => 
-        array (
-            'Discogs' => 
-            array (
-                0 => __DIR__ . '/..' . '/ricbra/php-discogs-api/lib',
-            ),
-        ),
-    );
-
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc444a2fb0a912edaec36c83abffaffef::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc444a2fb0a912edaec36c83abffaffef::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitc444a2fb0a912edaec36c83abffaffef::$prefixesPsr0;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit72a0c541765ebc31f9238a9d37ae1281::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit72a0c541765ebc31f9238a9d37ae1281::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }

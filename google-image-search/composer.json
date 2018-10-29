@@ -1,0 +1,5 @@
+{
+    "require": {
+        "odannyc/google-image-search": "@dev"
+    }
+}

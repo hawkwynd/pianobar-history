@@ -10,21 +10,16 @@
 </head>
 <body>
 
-<!-- Trigger/Open The Modal -->
-<!-- <button id="myBtn">Open Modal</button> -->
-
-
 <!-- The Modal -->
 <div id="myModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
         <span class="close">&times;</span>
         <div class="content-container"></div>
-        <span class="close">&times;</span>
     </div>
-
 </div>
 
+<!-- the container -->
 <div class="container">
     <h2>Pianobar Historical</h2>
     <table id="deviceTable" class="display" style="width:100%">
@@ -38,16 +33,16 @@
             <th>Year</th>
             <th>Label</th>
             <th>Played</th>
-            <th>Cover</th>
         </tr>
         </thead>
         <tfoot>
         <tr>
-            <td colspan=6>The Pianobar History of Played Music Collection by Scott Fleming</td>
+            <td colspan=6>The Pianobar History of Played Music Collection written by Scott Fleming</td>
         </tr>
         </tfoot>
     </table>
-</div>
+</div><!-- // the container -->
+
 <div class="footer">
     <a href="/pianobar">View Loved Songs</a>
 </div>

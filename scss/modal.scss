@@ -38,3 +38,22 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.modalImg img{
+  float:right;
+  margin: 0 0 10px 20px;
+  width: 40%;
+}
+
+// members thumbnail container
+.thumbNail {
+  float: left;
+  margin: 0 10px 10px 0;
+
+}
+
+.memberName {
+  clear: both;
+  margin: 5px 0;
+
+}

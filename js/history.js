@@ -46,17 +46,8 @@ $(document).ready(function() {
                     var date = new Date(data);
                     var month = date.getMonth() + 1;
                     return (month.length > 1 ? month : month) + "/" + date.getDate() + "/" + date.getFullYear()+ "&nbsp;" +(date.getHours() < 10 ? ("0"+date.getHours()) : date.getHours())+ ":"+(date.getMinutes() < 10 ? ("0"+date.getMinutes()) : date.getMinutes()) ;
-                }},
-            {data: "coverImg",
-                "render" : function(data) {
-                    if(data){
-                        return '<div class="zoom"><img src=' + data + '></div>';
-                    }else{
-                        return '';
-                    }
+                }}
 
-                }
-            }
 
         ]
     });
@@ -133,6 +124,9 @@ $(document).ready(function() {
                 var content = $.parseJSON(output);
 
                 $('.content-container').append('<h3>'+content.artist.name+'</h3>');
+                if(content.metadata.coverImg) $('.content-container').append(
+                    '<div class="modalImg"><img src="' + content.metadata.coverImg + '"></div>'
+                );
                 $('.content-container').append('<div class="songTitle">Title: ' + songTitle + '</div>');
 
                 // Get The album
@@ -147,7 +141,8 @@ $(document).ready(function() {
                 // Genres
                 if(content.genres) $('.content-container').append('<div class="wiki slant">Genre: '+content.genres+'</div>');
 
-
+                // formats
+                if(content.metadata.formats)$('.content-container').append('<div class="wiki slant">Formats: '+content.metadata.formats+'</div>');
 
                 // display band extract
                 if(content.wiki.extract){
@@ -157,10 +152,15 @@ $(document).ready(function() {
                 // Band members list (if available)
                 if(content.artist.members.length > 0){
                     var members = '<h3>Members</h3>';
+
                     $.each(content.artist.members, function( k, v){
                         members += '<div class=memberName excerpt>'+ v.member_name + '</div>';
+
+                        //if(v.member_thumb) members += '<div class=thumbNail><img title="' + v.member_thumb_title + '" src="' + v.member_thumb + '"></div>';
+
                         members += '<div class=excerpt>' + v.member_content + '</div>';
                     });
+
                     $('.content-container').append(members);
                 }
 
@@ -169,13 +169,12 @@ $(document).ready(function() {
                     var videos='<h3>YouTube Videos</h3>';
                     $.each(content.artist.videos, function(k,v){
                         videos += '<div class="vTitle"><a href="'+ v.uri +'" target="_blank">' + v.title + '</a></div>';
-                        //videos += '<div class="vLink">' + v.uri + '</div>';
                     });
 
                     $('.content-container').append(videos);
                 }
 
-                console.log(content);
+               // console.log(content);
             },
             error: function(output){
                 alert("fail");

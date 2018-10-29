@@ -7,14 +7,37 @@
  * and includes wikipedia definitional info about the artist.
  */
 
+require 'discogs-api/vendor/autoload.php';
+require 'mongodb/vendor/autoload.php';
+
+// $masterID = intval(6649);
+
 $consumerKey        = "jaRkJhfCzjSmakRoGyjP";
 $consumerSecret     = "MGSKueXgidqwXOxbmmtSOGfUoFHtXdfC";
-$masterID           = $_GET['id'];
+$masterID           = intval($_GET['id']);
 $pianobar           = new stdClass(); // init our object
-
+$output             = [];
 // Some band names need to be set as (band). Expand this list as needed. -sf
 $bandsToFilter = array('Boston', 'Styx', 'Incubus', 'Eagles', 'Kenny Wayne Shepherd', 'Journey');
 
+// init our collection client
+$collection = (new MongoDB\Client)->scottybox->pianobar;
+
+foreach( $collection->find(
+                                [ 'masterId' => $masterID ],
+                                ['projection' => [
+                                    'coverImg'  => 1,
+                                    'formats'   => 1,
+                                    'thumb'     => 1,
+                                    'catno'     => 1
+                                ]]
+                     ) as $row){
+
+                    $pianobar->metadata->coverImg     = $row->coverImg;
+                    $pianobar->metadata->formats      = $row->formats;
+                    $pianobar->metadata->thumb        = $row->thumb;
+                    $pianobar->metadata->catno        = $row->catno;
+}
 
 /**
  * Get the master information based on the master_id from query of search
@@ -87,6 +110,27 @@ foreach($info->members as $member){
 
     $member->name = trim(preg_replace('/\([0-9]\)/', '', $member->name));
 
+    // Get cURL resource for our member image.
+    /*
+    $curl = curl_init();
+    curl_setopt_array($curl,
+        array(
+            CURLOPT_RETURNTRANSFER      => 1,
+            CURLOPT_URL                 => "https://scottybox.tech/pianobar/google-image-search.php?q=".urlencode($member->name),
+            CURLOPT_USERAGENT           => "pianobar/1.1"
+        )
+    );
+    $imgresp   = curl_exec($curl);
+    $imgdata   = json_decode($imgresp, true);
+    $thumb     = '';
+
+    if($imgdata){
+        foreach($imgdata as $memberImage){
+            $thumb = $memberImage['thumb'];
+            $thumbTitle=$memberImage['title'];
+        }
+    }
+*/
     $wiki = json_decode( wikidefinition( $member->name ) );
 
     foreach($wiki->query->pages as $content){

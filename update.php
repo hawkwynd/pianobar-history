@@ -38,36 +38,33 @@ curl_close($curl);
 
 $out        = json_decode($resp);
 $results    = $out->results[0]; // just the first row.
+$id         = $results->id;
+$master_id  = $results->master_id;
+$year       = $results->year;
+$style      = implode("," ,$results->style);
+$genre      = implode(",", $results->genre);
+$country    = $results->country;
+$thumb      = $results->thumb;
+$coverImg   = $results->cover_image;
+$formats    = implode(",", $results->format);
+$labels     = $results->label[0];
+$catno      = $results->catno;
 
+require 'mongodb/vendor/autoload.php';
 
-// vars for input
-$id        = $results->id;
-$master_id = $results->master_id;
-$year      = $results->year;
-$style     = implode("," ,$results->style);
-$genre     = implode(",", $results->genre);
-$country   = $results->country;
-$thumb     = $results->thumb;
-$coverImg  = $results->cover_image;
-$formats   = implode(",", $results->format);
-$labels    = $results->label[0];
-$catno     = $results->catno;
-
-
-
-require '../zip/vendor/autoload.php';
 // create collection if it doesnt exist
 $collection = (new MongoDB\Client)->scottybox->$table;
-
-// DateTime Offset
 $tz         = 'America/Chicago';
 $timestamp  = time();
-$dt = new DateTime("now", new DateTimeZone($tz)); //first argument "must" be a string
+$dt         = new DateTime("now", new DateTimeZone($tz)); //first argument "must" be a string
 $dt->setTimestamp($timestamp); //adjust the object to correct timestamp
+
+// insert record into pianobar collection, if exists update the record
+// so we don't have a duplicate entry, ever.
 
 $updateResult = $collection->updateOne(
     ['title'    => $_POST['title']],
-    ['$set'     => [
+        ['$set'     => [
                 'title'         => $_POST['title'],
                 'artist'        => $_POST['artist'],
                 'loveDate'      => $dt->format('m-d-y g:i a'),
