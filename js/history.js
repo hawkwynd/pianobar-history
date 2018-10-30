@@ -107,27 +107,12 @@ $(document).ready(function() {
         var songTitle   = $(this).closest("tr").find(".title").text();
         var label       = $(this).closest("tr").find(".label").text();
         var MasterUrl         = 'getMaster.php?id='+data;
-        var YoutubeUrl  = 'youtube.php?maxResults=3&q='+songTitle;
-
-        var jsonVids = function() {
-                var tmp = null;
-                $.ajax({
-                    type : 'GET',
-                    url : YoutubeUrl,
-                    success: function(videos){
-                        tmp = $.parseJSON(videos);
-                    },
-                    error: function(videos){
-                        //alert("fail");
-                    }
-                });
-                    return tmp;
-        }();
-
-        console.log(jsonVids); // dump our results
 
         modal.style.display = "block";
 
+        getMaster();
+
+        function getMaster(){
         $.ajax({
             type: 'GET',
             url: MasterUrl,
@@ -167,9 +152,6 @@ $(document).ready(function() {
 
                     $.each(content.artist.members, function( k, v){
                         members += '<div class=memberName excerpt>'+ v.member_name + '</div>';
-
-                        //if(v.member_thumb) members += '<div class=thumbNail><img title="' + v.member_thumb_title + '" src="' + v.member_thumb + '"></div>';
-
                         members += '<div class=excerpt>' + v.member_content + '</div>';
                     });
 
@@ -177,25 +159,56 @@ $(document).ready(function() {
                 }
 
                 // List YouTube video links
-                if(content.artist.videos.length > 0){
+                /* if(content.artist.videos.length > 0){
                     var videos='<h3>YouTube Videos</h3>';
                     $.each(content.artist.videos, function(k,v){
                         videos += '<div class="vTitle"><a href="'+ v.uri +'" target="_blank">' + v.title + '</a></div>';
                     });
 
-
-
-
                     $('.content-container').append(videos);
                 }
+                */
 
-               // console.log(content);
+                getVideo(); // call the video ajax here
+
             },
             error: function(output){
                 alert("fail");
             }
         });
+
+    } // getMaster()
+
+        function getVideo(){
+
+            $.ajax({
+                type: 'POST',
+                url: 'youtube.php',
+                data: {'q': songTitle, 'maxResults': 3 },
+                success: function(results){
+
+                    arr = $.parseJSON(results);
+
+                    var videos = '<h3>YouTube Search Results</h3><div class=vcontainer>';
+
+                    $.each(arr, function(k,v){
+                      console.log(v);
+                       videos += '<div class="vThumb"><img src="'+ v.thumb + '"></div>';
+                       videos += '<div class="youtubeLink"><a href="https://www.youtube.com/watch?v=' + v.videoId + '" target="_blank">' + v.title + '</a><br/>' + v.description +'<br/>Posted ' + v.postDate + '</div>';
+
+                    });
+                    videos += '</div>';
+
+                    $('.content-container').append(videos);
+                }
+            });
+
+        } // getVideo()
+
+
     });
 
 
+
 });
+

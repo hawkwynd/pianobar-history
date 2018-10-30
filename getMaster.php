@@ -10,8 +10,6 @@
 require 'discogs-api/vendor/autoload.php';
 require 'mongodb/vendor/autoload.php';
 
-// $masterID = intval(6649);
-
 $consumerKey        = "jaRkJhfCzjSmakRoGyjP";
 $consumerSecret     = "MGSKueXgidqwXOxbmmtSOGfUoFHtXdfC";
 $masterID           = intval($_GET['id']);
@@ -150,6 +148,8 @@ foreach($wiki->query->pages as $wikiResult){
 }
 
 
+
+
 echo json_encode($pianobar);
 
 
@@ -184,11 +184,13 @@ function wikidefinition($s) {
  * @param string $filter
  * @return string
  */
+
+
+
 function filterWikiContent($content, $memberName, $filter="may refer to:"){
     if( strpos($content,$filter) !== false ){
         return "The internet (wikipedia) has no relevant info on " .$memberName. ". Guess you are on your own to Google it for yourself, sorry, but I'm a little busy at the moment and don't have time to do everything for you, ya ungrateful, lazy sloth!";
     }
 
     return $content;
-
 }

@@ -132,4 +132,19 @@ tfoot td {
   margin: 5px 0;
 }
 
+.vcontainer {
+  padding: 10px;
+  width: 80%;
+}
+
+.vThumb {
+  width: 15%;
+  float: left;
+  padding: 0 10px 0 0;
+}
+
+.youtubeLink {
+  height: 100px;
+}
+
 /*# sourceMappingURL=style.css.map */

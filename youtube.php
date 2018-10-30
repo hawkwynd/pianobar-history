@@ -10,10 +10,10 @@
 require_once __DIR__ . '/google-api-client/vendor/autoload.php';
 
 
-if (isset($_GET['q']) && isset($_GET['maxResults'])) {
+if (isset($_POST['q']) && isset($_POST['maxResults'])) {
 
-$query          = $_GET['q'];
-$maxResults     = $_GET['maxResults'];
+$query          = $_POST['q'];
+$maxResults     = $_POST['maxResults'];
 
 $DEVELOPER_KEY  = 'AIzaSyCGWMsm_DXXCFO8eIXHWJJQaznDyWQcicU';
 $client         = new Google_Client();
@@ -28,8 +28,8 @@ try {
     // query term.
 
     $searchResponse = $youtube->search->listSearch('id, snippet', array(
-        'q'          => $_GET['q'],
-        'maxResults' => $_GET['maxResults'],
+        'q'          => $_POST['q'],
+        'maxResults' => $_POST['maxResults'],
     ));
 
     $json       = [];
@@ -43,27 +43,14 @@ try {
         switch ($searchResult['id']['kind']) {
             case 'youtube#video':
                 array_push($json, array(
-                        'videoId' => $searchResult['id']['videoId'],
-                        'title'   => $searchResult['snippet']['title'],
-                        'postDate'=> date('m-d-Y',strtotime($searchResult['snippet']['publishedAt'])),
-                        'thumb'   => $searchResult['snippet']['thumbnails']['default']['url'],
-                        'description'   => $searchResult['snippet']['description'],
-                        'type'  => 'video'
+                            'videoId' => $searchResult['id']['videoId'],
+                            'title'   => $searchResult['snippet']['title'],
+                            'postDate'=> date('m-d-Y',strtotime($searchResult['snippet']['publishedAt'])),
+                            'thumb'   => $searchResult['snippet']['thumbnails']['default']['url'],
+                            'description'   => $searchResult['snippet']['description'],
+                            'type'  => 'video'
                         )
                 );
-                break;
-
-            case 'youtube#playlist':
-
-                array_push($json, array('videoId' => $searchResult['id']['videoId'],
-                        'title'   => $searchResult['snippet']['title'],
-                        'postDate'=> date('m-d-Y',strtotime($searchResult['snippet']['publishedAt'])),
-                        'thumb'   => $searchResult['snippet']['thumbnails']['default']['url'],
-                        'description'   => $searchResult['snippet']['description'],
-                        'type'  => 'playlist'
-                    )
-                );
-
                 break;
         }
         $i++;
