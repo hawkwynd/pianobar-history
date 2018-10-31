@@ -4,7 +4,6 @@
   width: 80%;
 }
 
-
 .vThumb {
   width: 15%;
   float: left;
@@ -12,9 +11,15 @@
 }
 .youtubeLink {
   height: 100px;
-  line-height: 20px;
+  line-height: 23px;
 
 }
+.youtubeLink a{
+  text-decoration: none;
+}
+.youtubeLink a:hover{
+  text-decoration: underline;
+ }
 
 h3.ytHeader{
   background-image: url('youtube-icon.png');
@@ -24,5 +29,13 @@ h3.ytHeader{
   padding: 10px 0 0 55px;
   font-weight: bold;
   color: red;
+  border-bottom: none;
 
+}
+
+.postDate{
+  clear: right;
+  margin-bottom: 10px;
+  font-size: smaller;
+  color: #808080;
 }

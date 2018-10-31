@@ -26,7 +26,7 @@
 
 <!-- the container -->
 <div class="container">
-    <h2>Pianobar Historical</h2>
+    <h1>Pianobar Music History</h1>
     <table id="deviceTable" class="display" style="width:100%">
         <thead>
         <tr>

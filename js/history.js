@@ -10,6 +10,22 @@ $(document).ready(function() {
     var info = false;
 
     $('#deviceTable').dataTable({
+        "language": {
+            "search"        : "Find anything ",
+            "info"          : "Showing _START_ to _END_ of _TOTAL_ songs",
+            "lengthMenu"    : "Show _MENU_ songs",
+            "zeroRecords"   : "No matching songs found",
+            "loadingRecords": "Loading songs...",
+            "processing"    : "Processing...",
+            "infoFiltered"  : "(filtered from _MAX_ total songs)",
+            "paginate": {
+                "first":      "First",
+                "last":       "Last",
+                "next":       "Next",
+                "previous":   "Previous"
+            }
+        },
+
         "lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]],
         pageLength: 10,
         order: [[7, "desc"]],
@@ -124,7 +140,7 @@ $(document).ready(function() {
 
                 var content = $.parseJSON(output);
 
-                $('.content-container').append('<h3>'+content.artist.name+'</h3>');
+                $('.content-container').append('<h2>'+content.artist.name+'</h2>');
                 if(content.metadata.coverImg) $('.content-container').append(
                     '<div class="modalImg"><img src="' + content.metadata.coverImg + '"></div>'
                 );
@@ -157,7 +173,7 @@ $(document).ready(function() {
 
                 // display band extract
                 if(content.wiki.extract){
-                    $('.content-container').append('<h3>Band information</h3><div class=wiki>'+content.wiki.extract+'</div>');
+                    $('.content-container').append('<h2>Band information</h2><div class=wiki>'+content.wiki.extract+'</div>');
                 }
 
                 // Band members list (if available)
@@ -191,14 +207,15 @@ $(document).ready(function() {
                 success: function(results){
 
                     arr = $.parseJSON(results);
-                    var videos = '<h3 class="ytHeader">Videos</h3><div class=vcontainer>';
+                    var videos = '<h3 class="ytHeader">Listen</h3><div class=vcontainer>';
 
                     $.each(arr, function(k,v){
                        videos += '<div class="vThumb"><img src="'+ v.thumb + '"></div>';
-                       videos += '<div class="youtubeLink"><a href="https://www.youtube.com/watch?v=' + v.videoId + '" target="_blank">' + v.title + '</a><br/>' + v.description +'<br/>Posted ' + v.postDate + '</div>';
+                       videos += '<div class="youtubeLink"><a href="https://music.youtube.com/watch?v=' + v.videoId + '" target="_blank">' + v.title + '</a><br/>' + v.description;
+                        videos += '<div class="postDate">Posted ' + v.postDate + '</div><br clear="all"/>';
 
                     });
-                    videos += '</div>';
+                    videos += '</div><!-- vcontainer -->';
 
                     $('.content-container').append(videos).fadeIn('slow');
                 }
