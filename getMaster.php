@@ -27,10 +27,14 @@ foreach( $collection->find(
                                     'coverImg'  => 1,
                                     'formats'   => 1,
                                     'thumb'     => 1,
-                                    'catno'     => 1
+                                    'catno'     => 1,
+                                    'lyrics'    => 1
                                 ]]
                      ) as $row){
 
+                    // drop the first line of the lyrics, which leaves 2 \n\n afterwards
+                    $formatted_lyrics                 = preg_replace('/^.+\n/', '', $row->lyrics);
+                    $pianobar->lyrics                 = nl2br(  preg_replace('/^.+\n\n/', '', $formatted_lyrics)    );
                     $pianobar->metadata->coverImg     = $row->coverImg;
                     $pianobar->metadata->formats      = $row->formats;
                     $pianobar->metadata->thumb        = $row->thumb;

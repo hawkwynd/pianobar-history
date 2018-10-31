@@ -19,6 +19,8 @@ $consumerSecret     = "MGSKueXgidqwXOxbmmtSOGfUoFHtXdfC";
 $table = $_POST['collection'];
 $title = urlencode( $_POST['title'] );
 $artist = urlencode( $_POST['artist'] );
+$lyrics = $_POST['lyrics'];
+
 
 // Get cURL resource
 $curl = curl_init();
@@ -82,7 +84,8 @@ $updateResult = $collection->updateOne(
                 'catno'         => $catno,
                 'status'        => $id,
                 'label'         => $labels,
-                'coverArt'      => isset($_POST['coverArt']) ? $_POST['coverArt'] : ''
+                'coverArt'      => isset($_POST['coverArt']) ? $_POST['coverArt'] : '',
+                'lyrics'        => $lyrics
                  ]
     ],
     ['upsert'   => true]
@@ -91,8 +94,12 @@ $updateResult = $collection->updateOne(
 $matchFound     = $updateResult->getMatchedCount() > 0 ? $updateResult->getMatchedCount() : false;
 $updateFound    = $updateResult->getModifiedCount() > 0 ? $updateResult->getModifiedCount() : false;
 
-    if($updateFound) {
-        echo "Your love has been updated!!\n\n";
-}
-
+    /*
+     *
+     if($updateFound) {
+        echo "      data insert successful!\n";
+    }else{
+        echo "      OK, new entry is in the DB.\n";
+    }
+*/
 exit;

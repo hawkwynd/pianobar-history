@@ -141,9 +141,19 @@ $(document).ready(function() {
                 // formats
                 if(content.metadata.formats)$('.content-container').append('<div class="wiki slant">Formats: '+content.metadata.formats+'</div>');
 
+
+                // show lyrics
+                if(content.lyrics.length > 50) {
+                    $('.content-container').append('<div class="wrap-collabsible">'+
+                        '<input id="collapsible" class="toggle" type="checkbox">'+
+                        '<label for="collapsible" class="lbl-toggle">Lyrics</label>' +
+                        '<div class="collapsible-content">'+
+                        '<div class="content-inner"">'+content.lyrics +'<br/></div></div></div>');
+                }
+
                 // display band extract
                 if(content.wiki.extract){
-                    $('.content-container').append('<div class=wiki>'+content.wiki.extract+'</div>');
+                    $('.content-container').append('<h3>Info for Your Brainz</h3><div class=wiki>'+content.wiki.extract+'</div>');
                 }
 
                 // Band members list (if available)
@@ -170,7 +180,7 @@ $(document).ready(function() {
                 */
 
                 getVideo(); // call the video ajax here
-
+                $('.colla')
             },
             error: function(output){
                 alert("fail");
