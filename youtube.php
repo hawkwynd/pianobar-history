@@ -9,12 +9,10 @@
 
 require_once __DIR__ . '/google-api-client/vendor/autoload.php';
 
-
 if (isset($_POST['q']) && isset($_POST['maxResults'])) {
 
 $query          = $_POST['q'];
 $maxResults     = $_POST['maxResults'];
-
 $DEVELOPER_KEY  = 'AIzaSyCGWMsm_DXXCFO8eIXHWJJQaznDyWQcicU';
 $client         = new Google_Client();
 $client->setDeveloperKey($DEVELOPER_KEY);

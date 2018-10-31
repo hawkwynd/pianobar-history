@@ -7,7 +7,6 @@
  * and includes wikipedia definitional info about the artist.
  */
 
-require 'discogs-api/vendor/autoload.php';
 require 'mongodb/vendor/autoload.php';
 
 $consumerKey        = "jaRkJhfCzjSmakRoGyjP";

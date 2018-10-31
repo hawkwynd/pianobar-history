@@ -4,7 +4,7 @@
  * Return wikipedia excerpt from query of artist.
  */
 
-$artist = $_GET['artist'];
+$artist     = $_GET['artist'];
 
 echo wikidefinition($artist);
 exit;
