@@ -21,6 +21,11 @@ $artist             = urlencode( $_POST['artist'] );
 $lyrics             = $_POST['lyrics'];
 $curl               = curl_init();
 
+// drop null or 0 masterID
+
+
+
+
 curl_setopt_array($curl,
     array(
         CURLOPT_RETURNTRANSFER      => 1,
@@ -56,37 +61,41 @@ $dt->setTimestamp($timestamp); //adjust the object to correct timestamp
 
 // insert record into pianobar collection, if exists update the record
 // so we don't have a duplicate entry, ever.
+// also, don't insert a record without a masterId because it
+// doesn't look good when you don't have info to display.
 
-$updateResult = $collection->updateOne(
-    ['title'    => $_POST['title']],
-        ['$set'     => [
-                'title'         => $_POST['title'],
-                'artist'        => $_POST['artist'],
-                'loveDate'      => $dt->format('m-d-y g:i a'),
-                'album'         => $_POST['album'],
-                'stationName'   => $_POST['stationName'],
-                'id'            => $id,
-                'masterId'      => $master_id,
-                'style'         => $style,
-                'genre'         => $genre,
-                'country'       => $country,
-                'coverImg'      => $coverImg,
-                'thumb'         => $thumb,
-                'formats'       => $formats,
-                'year'          => $year,
-                'catno'         => $catno,
-                'status'        => $id,
-                'label'         => $labels,
-                'coverArt'      => isset($_POST['coverArt']) ? $_POST['coverArt'] : '',
-                'lyrics'        => $lyrics,
-                ''
-                 ]
-    ],
-    ['upsert'   => true]
-);
+if($master_id || $master_id > 0):
+        $updateResult = $collection->updateOne(
+            ['title'    => $_POST['title']],
+                ['$set'     => [
+                        'title'         => $_POST['title'],
+                        'artist'        => $_POST['artist'],
+                        'loveDate'      => $dt->format('m-d-y g:i a'),
+                        'album'         => $_POST['album'],
+                        'stationName'   => $_POST['stationName'],
+                        'id'            => $id,
+                        'masterId'      => $master_id,
+                        'style'         => $style,
+                        'genre'         => $genre,
+                        'country'       => $country,
+                        'coverImg'      => $coverImg,
+                        'thumb'         => $thumb,
+                        'formats'       => $formats,
+                        'year'          => $year,
+                        'catno'         => $catno,
+                        'status'        => $id,
+                        'label'         => $labels,
+                        'coverArt'      => isset($_POST['coverArt']) ? $_POST['coverArt'] : '',
+                        'lyrics'        => $lyrics,
+                        ''
+                         ]
+            ],
+            ['upsert'   => true]
+        );
 
-$matchFound     = $updateResult->getMatchedCount() > 0 ? $updateResult->getMatchedCount() : false;
-$updateFound    = $updateResult->getModifiedCount() > 0 ? $updateResult->getModifiedCount() : false;
+        $matchFound     = $updateResult->getMatchedCount() > 0 ? $updateResult->getMatchedCount() : false;
+        $updateFound    = $updateResult->getModifiedCount() > 0 ? $updateResult->getModifiedCount() : false;
+endif;
 
 exit;
 
