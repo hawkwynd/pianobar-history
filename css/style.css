@@ -118,8 +118,11 @@ tfoot td {
 
 .modalImg img {
   float: right;
-  margin: 0 0 10px 20px;
-  width: 40%;
+  margin: 0 5px 10px 33px;
+  width: 30%;
+  -webkit-box-shadow: 4px 6px 21px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 4px 6px 21px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 4px 6px 21px 0px rgba(0, 0, 0, 0.75);
 }
 
 .thumbNail {
@@ -132,21 +135,66 @@ tfoot td {
   margin: 5px 0;
 }
 
-.vcontainer {
-  padding: 10px;
-  width: 80%;
-}
-
-.vThumb {
-  width: 15%;
-  float: left;
-  padding: 0 10px 0 0;
-}
-
-.youtubeLink {
+.lds-heart {
+  display: inline-block;
+  position: relative;
+  width: 100px;
   height: 100px;
+  transform: rotate(45deg);
+  transform-origin: 32px 32px;
+  margin: 10% 45%;
 }
 
+.lds-heart div {
+  top: 23px;
+  left: 19px;
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background: #f10606;
+  animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.lds-heart div:after,
+.lds-heart div:before {
+  content: " ";
+  position: absolute;
+  display: block;
+  width: 26px;
+  height: 26px;
+  background: #f10606;
+}
+
+.lds-heart div:before {
+  left: -17px;
+  border-radius: 50% 0 0 50%;
+}
+
+.lds-heart div:after {
+  top: -17px;
+  border-radius: 50% 50% 0 0;
+}
+
+@keyframes lds-heart {
+  0% {
+    transform: scale(0.95);
+  }
+  5% {
+    transform: scale(1.1);
+  }
+  39% {
+    transform: scale(0.85);
+  }
+  45% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
 .lyricHeader {
   display: block;
   font-size: 1.17em;
@@ -174,15 +222,13 @@ input[type=checkbox] {
 .lbl-toggle {
   display: block;
   font-weight: bold;
-  font-family: monospace;
-  font-size: 1.2rem;
   text-transform: uppercase;
   text-align: center;
-  padding: 1rem;
-  color: #A77B0E;
+  padding: 10px;
+  color: #A00000;
   background: #FAE042;
   cursor: pointer;
-  border-radius: 7px;
+  border-radius: px;
   transition: all 0.25s ease-out;
 }
 
@@ -228,6 +274,32 @@ input[type=checkbox] {
 .toggle:checked + .lbl-toggle {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
+}
+
+.vcontainer {
+  padding: 10px;
+  width: 80%;
+}
+
+.vThumb {
+  width: 15%;
+  float: left;
+  padding: 0 20px 0 0;
+}
+
+.youtubeLink {
+  height: 100px;
+  line-height: 20px;
+}
+
+h3.ytHeader {
+  background-image: url("youtube-icon.png");
+  background-repeat: no-repeat;
+  background-position: left -2px;
+  height: 35px;
+  padding: 10px 0 0 55px;
+  font-weight: bold;
+  color: red;
 }
 
 /*# sourceMappingURL=style.css.map */

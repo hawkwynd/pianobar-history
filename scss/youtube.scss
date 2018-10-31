@@ -1,0 +1,28 @@
+// Youtube results container
+.vcontainer {
+  padding: 10px;
+  width: 80%;
+}
+
+
+.vThumb {
+  width: 15%;
+  float: left;
+  padding: 0 20px 0 0;
+}
+.youtubeLink {
+  height: 100px;
+  line-height: 20px;
+
+}
+
+h3.ytHeader{
+  background-image: url('youtube-icon.png');
+  background-repeat: no-repeat;
+  background-position: left -2px;
+  height: 35px;
+  padding: 10px 0 0 55px;
+  font-weight: bold;
+  color: red;
+
+}

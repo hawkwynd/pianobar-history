@@ -35,7 +35,7 @@ foreach( $collection->find(
                     $formatted_lyrics                 = preg_replace('/^.+\n/', '', $row->lyrics);
                     $pianobar->lyrics                 = nl2br(  preg_replace('/^.+\n\n/', '', $formatted_lyrics)    );
                     $pianobar->metadata->coverImg     = $row->coverImg;
-                    $pianobar->metadata->formats      = $row->formats;
+                    $pianobar->metadata->formats      = str_replace(',', ', ', $row->formats);
                     $pianobar->metadata->thumb        = $row->thumb;
                     $pianobar->metadata->catno        = $row->catno;
 }

@@ -20,7 +20,6 @@ if($searchTerms){
 
     $myImage = ImageSearch::search($searchTerms, [
 
-                                    'siteSearchFilter' => "i",
                                     'searchType'    => 'image',
                                     'imgSize'       => 'large',
                                     'imgType'       => 'photo',
@@ -38,6 +37,7 @@ if($searchTerms){
                 )
             );
     }
+    echo "<pre>";
     echo json_encode( $output ,true );
 }
 exit;

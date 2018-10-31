@@ -109,6 +109,8 @@ $(document).ready(function() {
         var MasterUrl         = 'getMaster.php?id='+data;
 
         modal.style.display = "block";
+        $('.lds-heart').show();
+        $('.content-container').hide();
 
         getMaster();
 
@@ -117,6 +119,8 @@ $(document).ready(function() {
             type: 'GET',
             url: MasterUrl,
             success: function (output) {
+
+                $('.lds-heart').hide();
 
                 var content = $.parseJSON(output);
 
@@ -153,7 +157,7 @@ $(document).ready(function() {
 
                 // display band extract
                 if(content.wiki.extract){
-                    $('.content-container').append('<h3>Info for Your Brainz</h3><div class=wiki>'+content.wiki.extract+'</div>');
+                    $('.content-container').append('<h3>Band information</h3><div class=wiki>'+content.wiki.extract+'</div>');
                 }
 
                 // Band members list (if available)
@@ -168,19 +172,8 @@ $(document).ready(function() {
                     $('.content-container').append(members);
                 }
 
-                // List YouTube video links
-                /* if(content.artist.videos.length > 0){
-                    var videos='<h3>YouTube Videos</h3>';
-                    $.each(content.artist.videos, function(k,v){
-                        videos += '<div class="vTitle"><a href="'+ v.uri +'" target="_blank">' + v.title + '</a></div>';
-                    });
+                getVideo(content.artist.name + ' ' + songTitle); // call the video ajax here
 
-                    $('.content-container').append(videos);
-                }
-                */
-
-                getVideo(); // call the video ajax here
-                $('.colla')
             },
             error: function(output){
                 alert("fail");
@@ -189,27 +182,25 @@ $(document).ready(function() {
 
     } // getMaster()
 
-        function getVideo(){
+        function getVideo(query){
 
             $.ajax({
                 type: 'POST',
                 url: 'youtube.php',
-                data: {'q': songTitle, 'maxResults': 3 },
+                data: {'q': query, 'maxResults': 3 },
                 success: function(results){
 
                     arr = $.parseJSON(results);
-
-                    var videos = '<h3>YouTube Search Results</h3><div class=vcontainer>';
+                    var videos = '<h3 class="ytHeader">Videos</h3><div class=vcontainer>';
 
                     $.each(arr, function(k,v){
-                      console.log(v);
                        videos += '<div class="vThumb"><img src="'+ v.thumb + '"></div>';
                        videos += '<div class="youtubeLink"><a href="https://www.youtube.com/watch?v=' + v.videoId + '" target="_blank">' + v.title + '</a><br/>' + v.description +'<br/>Posted ' + v.postDate + '</div>';
 
                     });
                     videos += '</div>';
 
-                    $('.content-container').append(videos);
+                    $('.content-container').append(videos).fadeIn('slow');
                 }
             });
 
