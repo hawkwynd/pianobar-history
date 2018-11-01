@@ -140,6 +140,8 @@ $(document).ready(function() {
 
                 var content = $.parseJSON(output);
 
+                console.log(content);
+
                 $('.content-container').append('<h2>'+content.artist.name+'</h2>');
                 if(content.metadata.coverImg) $('.content-container').append(
                     '<div class="modalImg"><img src="' + content.metadata.coverImg + '"></div>'
@@ -160,6 +162,8 @@ $(document).ready(function() {
 
                 // formats
                 if(content.metadata.formats)$('.content-container').append('<div class="wiki slant">Formats: '+content.metadata.formats+'</div>');
+
+                if(content.core.last_played) $('.content-container').append('<div class="wiki slant">Last Played: ' + content.core.last_played + '</div>');
 
 
                 // show lyrics

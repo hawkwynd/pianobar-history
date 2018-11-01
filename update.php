@@ -21,11 +21,6 @@ $artist             = urlencode( $_POST['artist'] );
 $lyrics             = $_POST['lyrics'];
 $curl               = curl_init();
 
-// drop null or 0 masterID
-
-
-
-
 curl_setopt_array($curl,
     array(
         CURLOPT_RETURNTRANSFER      => 1,
@@ -56,8 +51,27 @@ $collection         = (new MongoDB\Client)->scottybox->$table;
 $tz                 = 'America/Chicago';
 $timestamp          = time();
 $dt                 = new DateTime("now", new DateTimeZone($tz));  //first argument "must" be a string
-
 $dt->setTimestamp($timestamp); //adjust the object to correct timestamp
+
+// first, lets' find our data for the update
+
+foreach( $collection->find(
+             [ 'title' => $_POST['title'] ],
+                 ['projection'  => [
+                     'playcount'        => 1,
+                     'loveDate'         => 1,
+                     'firstPlayedDate'  => 1
+                 ]]
+         ) as $row){
+
+        $playcount = $row->playcount++;
+        $loveDate  = $row->loveDate;
+        $firstPlayed = $row->firstPlayedDate;
+}
+
+echo $_POST['title'] ."\n";
+echo "playcount = " . $playcount ."\n";
+echo "\n";
 
 // insert record into pianobar collection, if exists update the record
 // so we don't have a duplicate entry, ever.
@@ -87,7 +101,8 @@ if($master_id || $master_id > 0):
                         'label'         => $labels,
                         'coverArt'      => isset($_POST['coverArt']) ? $_POST['coverArt'] : '',
                         'lyrics'        => $lyrics,
-                        ''
+                        'playcount'     => $playcount > 0 ? $playcount : 1,
+                        'firstPlayedDate' => $firstPlayed == null ? $dt->format('m-d-y g:i a') : $firstPlayed
                          ]
             ],
             ['upsert'   => true]

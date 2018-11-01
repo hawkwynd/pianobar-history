@@ -27,7 +27,8 @@ foreach( $collection->find(
                                     'formats'   => 1,
                                     'thumb'     => 1,
                                     'catno'     => 1,
-                                    'lyrics'    => 1
+                                    'lyrics'    => 1,
+                                    'loveDate'  => 1
                                 ]]
                      ) as $row){
 
@@ -38,7 +39,8 @@ foreach( $collection->find(
                     $pianobar->metadata->formats      = str_replace(',', ', ', $row->formats);
                     $pianobar->metadata->thumb        = $row->thumb;
                     $pianobar->metadata->catno        = $row->catno;
-}
+}                   $pianobar->core->last_played      = $row->loveDate;
+
 
 /**
  * Get the master information based on the master_id from query of search
@@ -149,9 +151,6 @@ foreach($wiki->query->pages as $wikiResult){
 
     $pianobar->wiki->notag_content = $content;
 }
-
-
-
 
 echo json_encode($pianobar);
 
