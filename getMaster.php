@@ -16,6 +16,12 @@ $pianobar           = new stdClass(); // init our object
 $output             = [];
 // Some band names need to be set as (band). Expand this list as needed. -sf
 $bandsToFilter = array('Boston', 'Styx', 'Incubus', 'Eagles', 'Kenny Wayne Shepherd', 'Journey', 'Chicago');
+$tz                 = 'America/Chicago';
+$timestamp          = time();
+$dt                 = new DateTime("now", new DateTimeZone($tz));  //first argument "must" be a string
+$dt->setTimestamp($timestamp); //adjust the object to correct timestamp
+
+
 
 // init our collection client
 $collection = (new MongoDB\Client)->scottybox->pianobar;
@@ -27,9 +33,10 @@ $results = $collection->find(
         'thumb'     => 1,
         'catno'     => 1,
         'lyrics'    => 1,
-        'loveDate'  => 1,
         'num_plays' => 1,
         'stationName'   => 1,
+        'first_played' => 1,
+        'last_played'   => 1
     ]] );
 
 
@@ -42,7 +49,8 @@ $results = $collection->find(
                     $pianobar->metadata->formats      = str_replace(',', ', ', $row->formats);
                     $pianobar->metadata->thumb        = $row->thumb;
                     $pianobar->metadata->catno        = $row->catno;
-                    $pianobar->core->last_played      = $row->loveDate;
+                    $pianobar->core->first_played     = $row->first_played == null ? $row->last_played : $row->first_played;
+                    $pianobar->core->last_played      = $row->last_played;
                     $pianobar->core->num_plays        = $row->num_plays;
                     $pianobar->core->stationName      = $row->stationName;
     }

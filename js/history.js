@@ -163,19 +163,26 @@ $(document).ready(function() {
                 // formats
                 if(content.metadata.formats)$('.content-container').append('<div class="wiki formats">Formats: '+content.metadata.formats+'</div>');
 
-                // last played date
-                if(content.core.last_played) $('.content-container').append('<div class="wiki last_played">Last Played: ' + content.core.last_played + '</div>');
+                // station name
+                if(content.core.stationName) {
+                    $('.content-container').append('<div class="wiki albumTitle">Pandora station: ' + content.core.stationName + '</div>');
+                }
+
+                // first played date
+                if(content.core.first_played) $('.content-container').append('<div class="wiki first_played">First Played: ' + content.core.first_played + '</div>');
 
                 // total plays by pianobar
                 if(content.core.num_plays) {
                     var playTxt = content.core.num_plays > 1 ? ' times' : ' time';
                     $('.content-container').append('<div class="wiki num_plays">Pandora has played this song '+ content.core.num_plays + playTxt +'.</div>');
+                    // last played date
+                    if(content.core.num_plays > 1){
+                        $('.content-container').append('<div class="wiki last_played">Last Played: ' + content.core.last_played + '</div>');
+                    }
+
                 }
 
-                // station name
-                if(content.core.stationName) {
-                    $('.content-container').append('<div class="wiki stationName">Pandora station: ' + content.core.stationName + '</div>');
-                }
+
 
                 // show lyrics
                 if(content.lyrics.length > 50) {

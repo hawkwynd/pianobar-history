@@ -56,8 +56,6 @@ $timestamp          = time();
 $dt                 = new DateTime("now", new DateTimeZone($tz));  //first argument "must" be a string
 $dt->setTimestamp($timestamp); //adjust the object to correct timestamp
 
-
-
 $find = $collection->findOne(
     ['$and'    =>   [
         ['artist'    => $_POST['artist']],
@@ -65,10 +63,15 @@ $find = $collection->findOne(
         ]
     ]
 );
-
-// insert record into pianobar collection, if exists update the record
-// so we don't have a duplicate entry, ever.
-
+// -------------- Notes to my former self ------------------------------------------------------------------------------
+//
+// firstplay field : If this field doesn't exist, create it and stick current date/time into it
+//                   to mark when it was first played. If it does exist keep the same value as it's record.
+// loveDate field  : update this field with the current timestamp, used as last_played later.
+//
+// Only perform the next stuff if we have a valid master id from discogs.com
+//----------------------------------------------------------------------------------------------------------------------
+if($results->master_id):
         $updateResult = $collection->findOneAndUpdate(
             ['$and'    =>   [
                                 ['artist'    => $_POST['artist']],
@@ -95,7 +98,9 @@ $find = $collection->findOne(
                             'label'         => $labels,
                             'coverArt'      => isset($_POST['coverArt']) ? $_POST['coverArt'] : '',
                             'lyrics'        => $lyrics,
-                            'firstplay'     => $find->firstplay == null ? $dt->format('m-d-y g:i:s a') : $update->firstplay
+                            'first_played'  => $find->first_played !== null ? $find->first_played : $dt->format('m-d-y g:i:s a'),
+                            'last_played'   => $dt->format('m-d-y g:i:s a'),
+                            'num_plays'     => intval($find->num_plays) > 0 ? (intval($find->num_plays) +1 ) : intval($find->num_plays)
                          ]
             ],
             ['upsert'   => true]
@@ -112,6 +117,9 @@ $find = $collection->findOne(
                 ],
                 ['upsert'   => true]
     );
+
+endif;
+
 exit;
 
 function wikidefinition($s) {
