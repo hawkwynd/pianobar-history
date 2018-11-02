@@ -56,7 +56,7 @@ input[type='checkbox'] {
   border-bottom: 1px solid rgba(250, 224, 66, .45);
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
-  padding: .5rem 1rem;
+  padding: .5rem 1rem 1.5rem 1rem;
   margin-top: -35px;
 }
 
@@ -69,8 +69,9 @@ input[type='checkbox'] {
 
 
 .toggle:checked + .lbl-toggle + .collapsible-content {
-  max-height: 1200px !important;
+  max-height: 4000px !important;
 }
+
 .toggle:checked + .lbl-toggle::before {
   transform: rotate(90deg) translateX(-3px);
 }

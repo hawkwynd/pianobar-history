@@ -156,15 +156,26 @@ $(document).ready(function() {
                 if(label) $('.content-container').append('<div class="albumTitle">Label: ' +label+ '</div>'  );
 
                 // Styles
-                if(content.styles) $('.content-container').append('<div class="wiki slant">Style: '+content.styles+'</div>');
+                if(content.styles) $('.content-container').append('<div class="wiki style">Style: '+content.styles+'</div>');
                 // Genres
-                if(content.genres) $('.content-container').append('<div class="wiki slant">Genre: '+content.genres+'</div>');
+                if(content.genres) $('.content-container').append('<div class="wiki genre">Genre: '+content.genres+'</div>');
 
                 // formats
-                if(content.metadata.formats)$('.content-container').append('<div class="wiki slant">Formats: '+content.metadata.formats+'</div>');
+                if(content.metadata.formats)$('.content-container').append('<div class="wiki formats">Formats: '+content.metadata.formats+'</div>');
 
-                if(content.core.last_played) $('.content-container').append('<div class="wiki slant">Last Played: ' + content.core.last_played + '</div>');
+                // last played date
+                if(content.core.last_played) $('.content-container').append('<div class="wiki last_played">Last Played: ' + content.core.last_played + '</div>');
 
+                // total plays by pianobar
+                if(content.core.num_plays) {
+                    var playTxt = content.core.num_plays > 1 ? ' times' : ' time';
+                    $('.content-container').append('<div class="wiki num_plays">Pandora has played this song '+ content.core.num_plays + playTxt +'.</div>');
+                }
+
+                // station name
+                if(content.core.stationName) {
+                    $('.content-container').append('<div class="wiki stationName">Pandora station: ' + content.core.stationName + '</div>');
+                }
 
                 // show lyrics
                 if(content.lyrics.length > 50) {
@@ -202,6 +213,11 @@ $(document).ready(function() {
 
     } // getMaster()
 
+        /**
+         * @function getVideo
+         * @desc ajax call to retrieve 3 youtube objects
+         * @param string
+         */
         function getVideo(query){
 
             $.ajax({
@@ -210,17 +226,16 @@ $(document).ready(function() {
                 data: {'q': query, 'maxResults': 3 },
                 success: function(results){
 
-                    arr = $.parseJSON(results);
+                    var arr = $.parseJSON(results);
                     var videos = '<h3 class="ytHeader">Listen</h3><div class=vcontainer>';
 
                     $.each(arr, function(k,v){
                        videos += '<div class="vThumb"><img src="'+ v.thumb + '"></div>';
                        videos += '<div class="youtubeLink"><a href="https://music.youtube.com/watch?v=' + v.videoId + '" target="_blank">' + v.title + '</a><br/>' + v.description;
-                        videos += '<div class="postDate">Posted ' + v.postDate + '</div><br clear="all"/>';
-
+                       videos += '<div class="postDate">Posted ' + v.postDate + '</div><br clear="all"/>';
                     });
-                    videos += '</div><!-- vcontainer -->';
 
+                    videos += '</div><!-- vcontainer -->';
                     $('.content-container').append(videos).fadeIn('slow');
                 }
             });

@@ -13,11 +13,11 @@ $table  = $_GET['table'];
 // init our collection client
 $collection = (new MongoDB\Client)->scottybox->$table;
 
-foreach( $collection->find() as $row){
+$results = $collection->find();
+
+foreach( $results as $row){
     array_push($output, $row);
 }
 
 $final['data'] = $output;
-
 echo json_encode($final);
-exit;

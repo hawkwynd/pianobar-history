@@ -15,22 +15,25 @@ $masterID           = intval($_GET['id']);
 $pianobar           = new stdClass(); // init our object
 $output             = [];
 // Some band names need to be set as (band). Expand this list as needed. -sf
-$bandsToFilter = array('Boston', 'Styx', 'Incubus', 'Eagles', 'Kenny Wayne Shepherd', 'Journey');
+$bandsToFilter = array('Boston', 'Styx', 'Incubus', 'Eagles', 'Kenny Wayne Shepherd', 'Journey', 'Chicago');
 
 // init our collection client
 $collection = (new MongoDB\Client)->scottybox->pianobar;
+$results = $collection->find(
+    [ 'masterId' => $masterID ],
+    ['projection' => [
+        'coverImg'  => 1,
+        'formats'   => 1,
+        'thumb'     => 1,
+        'catno'     => 1,
+        'lyrics'    => 1,
+        'loveDate'  => 1,
+        'num_plays' => 1,
+        'stationName'   => 1,
+    ]] );
 
-foreach( $collection->find(
-                                [ 'masterId' => $masterID ],
-                                ['projection' => [
-                                    'coverImg'  => 1,
-                                    'formats'   => 1,
-                                    'thumb'     => 1,
-                                    'catno'     => 1,
-                                    'lyrics'    => 1,
-                                    'loveDate'  => 1
-                                ]]
-                     ) as $row){
+
+    foreach( $results as $row){
 
                     // drop the first line of the lyrics, which leaves 2 \n\n afterwards
                     $formatted_lyrics                 = preg_replace('/^.+\n/', '', $row->lyrics);
@@ -39,7 +42,10 @@ foreach( $collection->find(
                     $pianobar->metadata->formats      = str_replace(',', ', ', $row->formats);
                     $pianobar->metadata->thumb        = $row->thumb;
                     $pianobar->metadata->catno        = $row->catno;
-}                   $pianobar->core->last_played      = $row->loveDate;
+                    $pianobar->core->last_played      = $row->loveDate;
+                    $pianobar->core->num_plays        = $row->num_plays;
+                    $pianobar->core->stationName      = $row->stationName;
+    }
 
 
 /**
@@ -115,9 +121,7 @@ foreach($info->members as $member){
     $wiki = json_decode( wikidefinition( $member->name ) );
 
     foreach($wiki->query->pages as $content){
-
         $memberContent = filterWikiContent( strip_tags($content->extract), $member->name);
-
     }
 
      array_push($pianobar->artist->members,  array(

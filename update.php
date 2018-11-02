@@ -9,8 +9,9 @@
  * https://www.discogs.com/developers/#page:home
  * Api information
  */
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
+//      error_reporting(E_ALL);
+//      ini_set('display_errors', 1);
+
 require 'mongodb/vendor/autoload.php';
 
 $consumerKey        = "jaRkJhfCzjSmakRoGyjP";
@@ -20,6 +21,8 @@ $title              = urlencode( $_POST['title'] );
 $artist             = urlencode( $_POST['artist'] );
 $lyrics             = $_POST['lyrics'];
 $curl               = curl_init();
+
+// get numcount of title & artist
 
 curl_setopt_array($curl,
     array(
@@ -53,65 +56,62 @@ $timestamp          = time();
 $dt                 = new DateTime("now", new DateTimeZone($tz));  //first argument "must" be a string
 $dt->setTimestamp($timestamp); //adjust the object to correct timestamp
 
-// first, lets' find our data for the update
 
-foreach( $collection->find(
-             [ 'title' => $_POST['title'] ],
-                 ['projection'  => [
-                     'playcount'        => 1,
-                     'loveDate'         => 1,
-                     'firstPlayedDate'  => 1
-                 ]]
-         ) as $row){
 
-        $playcount = $row->playcount++;
-        $loveDate  = $row->loveDate;
-        $firstPlayed = $row->firstPlayedDate;
-}
-
-echo $_POST['title'] ."\n";
-echo "playcount = " . $playcount ."\n";
-echo "\n";
+$find = $collection->findOne(
+    ['$and'    =>   [
+        ['artist'    => $_POST['artist']],
+        ['title'     => $_POST['title'] ]
+        ]
+    ]
+);
 
 // insert record into pianobar collection, if exists update the record
 // so we don't have a duplicate entry, ever.
-// also, don't insert a record without a masterId because it
-// doesn't look good when you don't have info to display.
 
-if($master_id || $master_id > 0):
-        $updateResult = $collection->updateOne(
-            ['title'    => $_POST['title']],
-                ['$set'     => [
-                        'title'         => $_POST['title'],
-                        'artist'        => $_POST['artist'],
-                        'loveDate'      => $dt->format('m-d-y g:i a'),
-                        'album'         => $_POST['album'],
-                        'stationName'   => $_POST['stationName'],
-                        'id'            => $id,
-                        'masterId'      => $master_id,
-                        'style'         => $style,
-                        'genre'         => $genre,
-                        'country'       => $country,
-                        'coverImg'      => $coverImg,
-                        'thumb'         => $thumb,
-                        'formats'       => $formats,
-                        'year'          => $year,
-                        'catno'         => $catno,
-                        'status'        => $id,
-                        'label'         => $labels,
-                        'coverArt'      => isset($_POST['coverArt']) ? $_POST['coverArt'] : '',
-                        'lyrics'        => $lyrics,
-                        'playcount'     => $playcount > 0 ? $playcount : 1,
-                        'firstPlayedDate' => $firstPlayed == null ? $dt->format('m-d-y g:i a') : $firstPlayed
+        $updateResult = $collection->findOneAndUpdate(
+            ['$and'    =>   [
+                                ['artist'    => $_POST['artist']],
+                                ['title'     => $_POST['title'] ]
+                            ]
+            ],
+                ['$set'  => [
+                            'title'         => $_POST['title'],
+                            'artist'        => $_POST['artist'],
+                            'loveDate'      => $dt->format('m-d-y g:i:s a'),
+                            'album'         => $_POST['album'],
+                            'stationName'   => $_POST['stationName'],
+                            'id'            => $id,
+                            'masterId'      => $master_id,
+                            'style'         => $style,
+                            'genre'         => $genre,
+                            'country'       => $country,
+                            'coverImg'      => $coverImg,
+                            'thumb'         => $thumb,
+                            'formats'       => $formats,
+                            'year'          => $year,
+                            'catno'         => $catno,
+                            'status'        => $id,
+                            'label'         => $labels,
+                            'coverArt'      => isset($_POST['coverArt']) ? $_POST['coverArt'] : '',
+                            'lyrics'        => $lyrics,
+                            'firstplay'     => $find->firstplay == null ? $dt->format('m-d-y g:i:s a') : $update->firstplay
                          ]
             ],
             ['upsert'   => true]
         );
 
-        $matchFound     = $updateResult->getMatchedCount() > 0 ? $updateResult->getMatchedCount() : false;
-        $updateFound    = $updateResult->getModifiedCount() > 0 ? $updateResult->getModifiedCount() : false;
-endif;
-
+    $updatePlays = $collection->findOneAndUpdate(
+                ['$and'    =>   [
+                                    ['artist'    => $_POST['artist']],
+                                    ['title'     => $_POST['title'] ]
+                                ]
+                ],
+                [
+                    '$inc' => ['num_plays' => 1 ]
+                ],
+                ['upsert'   => true]
+    );
 exit;
 
 function wikidefinition($s) {
