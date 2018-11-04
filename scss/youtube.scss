@@ -12,25 +12,30 @@
 .youtubeLink {
   height: 100px;
   line-height: 23px;
+  text-decoration: none;
+  cursor: pointer;
+  color: red;
+  font-size: 21px;
 
 }
-.youtubeLink a{
-  text-decoration: none;
-}
-.youtubeLink a:hover{
+.youtubeLink:hover{
   text-decoration: underline;
  }
-
+.vdescription{
+  clear: left;
+  padding: 10px 0;
+}
 h3.ytHeader{
   background-image: url('youtube-icon.png');
   background-repeat: no-repeat;
   background-position: left -2px;
   height: 35px;
-  padding: 10px 0 0 55px;
+  padding: 10px 0 10px 55px;
   font-weight: bold;
   color: red;
-  border-bottom: none;
-
+  border-bottom: 1px solid red;
+  width: 79%;
+  margin: 24px 0;
 }
 
 .postDate{
@@ -38,4 +43,92 @@ h3.ytHeader{
   margin-bottom: 10px;
   font-size: smaller;
   color: #808080;
+}
+
+// Loader class
+
+.fa-youtube:before{
+  padding: 0 5px;
+}
+
+.loader {
+  float:left;
+  margin: 0 10px;
+  border: 2px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 2px solid #3498db;
+  width: 28px;
+  height: 28px;
+  -webkit-animation: spin 1s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.wait{
+  display: none;
+  padding-top:12px;
+  font-size: 18px;
+}
+
+.fab{
+  margin-top:25px;
+}
+
+// Animate loader text
+@keyframes flickerAnimation {
+  0%   { opacity:1; color: red; }
+  50%  { opacity:0; }
+  100% { opacity:1; color: $stationNamecolor;}
+}
+@-o-keyframes flickerAnimation{
+  0%   { opacity:1; color: red; }
+  50%  { opacity:0; }
+  100% { opacity:1; color: $stationNamecolor;}
+}
+@-moz-keyframes flickerAnimation{
+  0%   { opacity:1; color: red; }
+  50%  { opacity:0; }
+  100% { opacity:1; color: $stationNamecolor;}
+}
+@-webkit-keyframes flickerAnimation{
+  0%   { opacity:1; color: red; }
+  50%  { opacity:0; }
+  100% { opacity:1; color: $stationNamecolor;}
+}
+.animate-flicker {
+  -webkit-animation: flickerAnimation 1s infinite;
+  -moz-animation: flickerAnimation 1s infinite;
+  -o-animation: flickerAnimation 1s infinite;
+  animation: flickerAnimation 1s infinite;
+}
+
+// download link and container
+.download{
+  margin: 5px 2px;
+  display: inline-block;
+  color:#808080;
+}
+.download a{
+  text-decoration: none;
+  color:#808080;
+}
+.download a:hover{
+  text-decoration: underline;
+ }
+
+// font-awesome fonts
+.fas{
+  color: #0000ff94;
+  font-size: 28px;
+  vertical-align: middle;
 }

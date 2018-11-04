@@ -12,35 +12,43 @@
   font-style: italic;
 }
 
-// collapsing div styling
+// collapsing div styling area begins
 
-.wrap-collabsible{
+.wrap-collabsible  {
   width: 55%;
   margin-top: 15px;
-
 }
 
-input[type='checkbox'] {
+.members-collabsible, .info-collabsible{
+  width: 95%;
+  margin-top: 15px;
+}
+
+.wrap-collabsible  input {
   display: none;
+  visibility: hidden;
 }
-.lbl-toggle {
+.wrap-collabsible  label {
   display: block;
   font-weight: bold;
-  text-transform: uppercase;
-  text-align: center;
+ // text-transform: uppercase;
+  text-align: left;
   padding: 10px;
-  color: #A00000;
-  background: #FAE042;
+  color: #1b71a4;
+ // background: rgba(36, 64, 242, 0.65);
   cursor: pointer;
   border-radius: px;
   transition: all 0.25s ease-out;
 }
-
-
-.lbl-toggle:hover {
-  color: #7C5A0B;
+.members-collabsible .info-collabsible label{
+  text-align: left;
 }
-.lbl-toggle::before {
+
+.wrap-collabsible .info-collabsible label:hover {
+  color: #fcff19;
+}
+
+.wrap-collabsible  label::before {
   content: ' ';
   display: inline-block;
   border-top: 5px solid transparent;
@@ -51,32 +59,30 @@ input[type='checkbox'] {
   transform: translateY(-2px);
   transition: transform .2s ease-out;
 }
-.collapsible-content .content-inner {
-  background: rgba(164, 164, 164, 0.20);
-  border-bottom: 1px solid rgba(250, 224, 66, .45);
+.expand {
+  height: 0px;
+  overflow: hidden;
+  transition: height 0.5s;
+}
+.wrap-collabsible section {
+  background: rgba(214, 214, 214, 0.20);
+  border-bottom: 2px solid rgba(91, 91, 91, 0.44);
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
   padding: .5rem 1rem 1.5rem 1rem;
   margin-top: -35px;
 }
 
-.collapsible-content {
-  max-height: 0px;
+.members-collabsible section, .info-collabsible section{
+  margin-top: 2px;
+}
+
+.toggle:checked + label + .expand {
+  height: auto;
   overflow: hidden;
-  transition: max-height .25s ease-in-out;
-
 }
-
-
-.toggle:checked + .lbl-toggle + .collapsible-content {
-  max-height: 4000px !important;
-}
-
-.toggle:checked + .lbl-toggle::before {
+.toggle:checked + label::before {
   transform: rotate(90deg) translateX(-3px);
 }
 
-.toggle:checked + .lbl-toggle {
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
+// collapsing div styling area begins
