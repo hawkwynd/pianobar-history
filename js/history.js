@@ -9,7 +9,8 @@ $(document).ready(function() {
 
     var info = false;
 
-    $('#deviceTable').dataTable({
+
+    $('#pianobarTable').dataTable({
         "language": {
             "search"        : "Find (almost) anything ",
             "info"          : "Showing _START_ to _END_ of _TOTAL_ songs",
@@ -28,7 +29,7 @@ $(document).ready(function() {
 
         "lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]],
         pageLength: 10,
-        order: [[7, "desc"]],
+        order: [[5, "desc"]],
         ajax: "mongod.php?table=pianobar",
         dataSrc: 'data',
         columns : [
@@ -56,13 +57,6 @@ $(document).ready(function() {
             {className : "album" , data : "album"},
             {data : "genre"},
             {data : "year"},
-            {className: "label", data : "label"},
-            {data: "loveDate",
-                "render": function (data) {
-                    var date = new Date(data);
-                    var month = date.getMonth() + 1;
-                    return (month.length > 1 ? month : month) + "/" + date.getDate() + "/" + date.getFullYear()+ "&nbsp;" +(date.getHours() < 10 ? ("0"+date.getHours()) : date.getHours())+ ":"+(date.getMinutes() < 10 ? ("0"+date.getMinutes()) : date.getMinutes()) ;
-                }}
         ]
     });
 
@@ -267,7 +261,7 @@ $(document).ready(function() {
                     $.each(arr, function(k,v){
                        videos += '<div class="vThumb"><img src="'+ v.thumb + '"></div>';
                        videos += '<div class="youtubeLink" id="' + v.videoId + '"><i class="fab fa-youtube"></i> Listen to <i>' +title + '</div>';
-                       videos += '<span class="wait">Fetching <b>'+ title +'</b> to extract mp3 audio...</span>';
+                       videos += '<span class="wait">Fetching <b>'+ title +'</b></span>';
                        videos += '<div class="vdescription"></div>';
                        videos += '<div class="postDate">Posted ' + v.postDate + '</div><br clear="all"/>';
                     });

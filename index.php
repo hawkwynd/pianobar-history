@@ -28,7 +28,16 @@
 <!-- the container -->
 <div class="container">
     <h1>Pianobar Music History</h1>
-    <table id="deviceTable" class="display" style="width:100%">
+    <header>
+        <div class="menu">
+            <ul>
+                <li><a href="loved.php">Loved songs</a></li>
+                <li><a href="">Menu 2</a></li>
+            </ul>
+
+        </div>
+    </header>
+    <table id="pianobarTable" class="display" style="width:100%">
         <thead>
         <tr>
             <th>Info</th>
@@ -36,14 +45,12 @@
             <th>Title</th>
             <th>Album</th>
             <th>Genre</th>
-            <th>Year</th>
-            <th>Label</th>
-            <th>Played</th>
+            <th>Released</th>
         </tr>
         </thead>
         <tfoot>
         <tr>
-            <td colspan=6>The Pianobar History of Played Music Collection written by Scott Fleming</td>
+            <td colspan=6>2018 Pianobar Data Tracker by <a href="mailto:scott.s.fleming@gmail.com">Scott Fleming</a></td>
         </tr>
         </tfoot>
     </table>

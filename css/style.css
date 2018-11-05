@@ -18,8 +18,30 @@ tfoot td {
   color: #0072a0;
 }
 
+.dataTables_wrapper {
+  padding-top: 30px;
+}
+
 .container {
   margin: 10px 30px;
+}
+
+header {
+  margin: 30px 0;
+}
+header .menu {
+  margin: 20px 0;
+}
+header .menu ul {
+  padding: 0;
+  list-style-type: none;
+  margin: 20px 20px 40px 0;
+}
+header .menu a {
+  color: #0072a0;
+  text-decoration: none;
+  float: left;
+  padding-right: 10px;
 }
 
 .zoom {
@@ -69,6 +91,7 @@ tfoot td {
 h1 {
   font-size: 27px;
   color: midnightblue;
+  padding: 0;
 }
 
 /* The Modal (background) */
@@ -98,20 +121,22 @@ h1 {
   background-color: #fefefe;
   margin: 5% auto;
   /* 10% from the top and centered */
-  padding: 20px;
+  padding: 0 20px;
   border: 1px solid #888;
   width: 60%;
   /* Could be more or less, depending on screen size */
-  height: 70%;
+  height: 85%;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 /* The Close Button */
 .close {
   color: #8c8c8c;
   float: right;
-  font-size: 28px;
+  font-size: 50px;
   font-weight: normal;
+  padding: 6px 0;
 }
 
 .close:hover,
@@ -232,7 +257,7 @@ h3 {
 
 .members-collabsible, .info-collabsible {
   width: 95%;
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 .wrap-collabsible input {
@@ -244,7 +269,7 @@ h3 {
   display: block;
   font-weight: bold;
   text-align: left;
-  padding: 10px;
+  padding: 4px 0;
   color: #1b71a4;
   cursor: pointer;
   border-radius: px;
@@ -473,14 +498,18 @@ h3.ytHeader {
 }
 
 .dataTables_wrapper .dataTables_filter input {
-  border: 2px solid white;
+  border: 2px solid #dad5d5;
   -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
   box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
-  padding: 10px;
+  padding: 5px;
   background: rgba(255, 255, 255, 0.5);
   margin: 0 0 10px 10px !important;
   font-size: inherit !important;
+}
+
+.dataTables_wrapper .dataTables_filter select {
+  width: 50px;
 }
 
 .Pstats {
@@ -490,9 +519,8 @@ h3.ytHeader {
 .PstatsHeader {
   color: #1b71a4;
   font-weight: 700;
-  border-bottom: 1px solid grey;
   width: 40%;
-  margin: 12px 32px;
+  margin: 6px 32px;
 }
 
 #player-wrapper {

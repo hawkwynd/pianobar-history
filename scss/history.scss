@@ -10,22 +10,49 @@ td a{ text-decoration: none; color: #0072a0
 }
 tfoot td{text-align: center;color: #0072a0}
 
+.dataTables_wrapper{
+  padding-top: 30px;
+}
+
 .container{
     margin: 10px 30px;
 }
 
+// header containers
+header{
+  margin: 30px 0;
 
+  .menu{
+    margin: 20px 0;
+    ul{
+      padding: 0;
+      list-style-type: none;
+      margin: 20px 20px 40px 0;
+    }
+    li{
+
+    }
+    a {
+      color: #0072a0;
+      text-decoration: none;
+      float: left;
+      padding-right: 10px;
+
+    }
+  }
+}
+
+
+// to be removed in next release
 .zoom {
     padding: 0px;
     transition: transform .2s; /* Animation */
 width: 70px;
 margin: 0 0 0 10px;
   }
-
 .zoom img{
       width: 40px;
 }
-
 .zoom:hover {
   transform: scale(3) translate(-20px, 0px);
 }
@@ -62,4 +89,5 @@ margin: 0 0 0 10px;
 h1{
   font-size: 27px;
   color: midnightblue;
+  padding: 0;
 }
