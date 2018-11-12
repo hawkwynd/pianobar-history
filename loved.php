@@ -32,7 +32,7 @@
                     {data: "coverImg",
                         "render" : function(data) {
                             if(data){
-                                return '<div class="zoom"><img src=' + data + '></div>';
+                                return '<div class="modalImg"><img src=' + data + '></div>';
                             }else{
                                 return '';
                             }

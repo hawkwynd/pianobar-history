@@ -5,7 +5,6 @@
  */
 
 $artist     = $_GET['artist'];
-
 echo wikidefinition($artist);
 exit;
 
@@ -30,7 +29,6 @@ function wikidefinition($s) {
 
     return($page);
 }
-
 
 
 

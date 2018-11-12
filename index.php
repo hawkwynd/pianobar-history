@@ -11,21 +11,19 @@
 </head>
 <body>
 
-<!-- The Modal -->
+<!-- modal -->
 <div id="myModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
         <span class="close">&times;</span>
         <div class="lds-heart">
             <div></div>
-        </div>
-
+        </div><!-- lds-heart-->
         <div class="content-container"></div>
+    </div><!-- modal-content -->
+</div><!--// modal -->
 
-    </div>
-</div>
-
-<!-- the container -->
+<!-- container -->
 <div class="container">
     <h1>Pianobar Music History</h1>
     <header>
@@ -45,7 +43,7 @@
             <th>Title</th>
             <th>Album</th>
             <th>Genre</th>
-            <th>Released</th>
+            <th>Played</th>
         </tr>
         </thead>
         <tfoot>
@@ -54,10 +52,10 @@
         </tr>
         </tfoot>
     </table>
-</div><!-- // the container -->
+</div><!--// container -->
 
 <div class="footer">
     <a href="loved.php">View Loved Songs</a>
-</div>
+</div><!-- // footer -->
 </body>
 </html>

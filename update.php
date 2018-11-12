@@ -12,17 +12,19 @@
 //      error_reporting(E_ALL);
 //      ini_set('display_errors', 1);
 
+// TODO: Build and admin panel to manage the records.
+// TODO: Edit/Update/Delete records functions on the back end
+// TODO: Require authentication to do this.
+
 require 'mongodb/vendor/autoload.php';
 
 $consumerKey        = "jaRkJhfCzjSmakRoGyjP";
 $consumerSecret     = "MGSKueXgidqwXOxbmmtSOGfUoFHtXdfC";
 $table              = $_POST['collection'];
-$title              = urlencode( $_POST['title'] );
+$title              = urlencode( preg_replace('#\s*\[.+\]\s*#U', ' ', $_POST['title'] ) ); // remove (text)
 $artist             = urlencode( $_POST['artist'] );
 $lyrics             = $_POST['lyrics'];
 $curl               = curl_init();
-
-// get numcount of title & artist
 
 curl_setopt_array($curl,
     array(
@@ -64,13 +66,9 @@ $find = $collection->findOne(
     ]
 );
 // -------------- Notes to my former self ------------------------------------------------------------------------------
-//
-// firstplay field : If this field doesn't exist, create it and stick current date/time into it
-//                   to mark when it was first played. If it does exist keep the same value as it's record.
-// loveDate field  : update this field with the current timestamp, used as last_played later.
-//
 // Only perform the next stuff if we have a valid master id from discogs.com
 //----------------------------------------------------------------------------------------------------------------------
+
 if($results->master_id):
         $updateResult = $collection->findOneAndUpdate(
             ['$and'    =>   [
@@ -96,11 +94,10 @@ if($results->master_id):
                             'catno'         => $catno,
                             'status'        => $id,
                             'label'         => $labels,
-                            'coverArt'      => isset($_POST['coverArt']) ? $_POST['coverArt'] : '',
+                            'coverArt'      => isset($_POST['coverArt']) ? $_POST['coverArt'] : null,
                             'lyrics'        => $lyrics,
-                            'first_played'  => $find->first_played !== null ? $find->first_played : $dt->format('m-d-y g:i:s a'),
-                            'last_played'   => $dt->format('m-d-y g:i:s a'),
-                            'num_plays'     => intval($find->num_plays) > 0 ? (intval($find->num_plays) +1 ) : intval($find->num_plays)
+                            'first_played'  => is_null($find->first_played) ? $dt->format('m-d-y g:i:s a'): $find->first_played,
+                            'last_played'   => $dt->format('m-d-y g:i:s a')
                          ]
             ],
             ['upsert'   => true]
@@ -117,8 +114,9 @@ if($results->master_id):
                 ],
                 ['upsert'   => true]
     );
-
 endif;
+
+
 
 exit;
 

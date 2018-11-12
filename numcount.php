@@ -3,6 +3,9 @@
  * Date: 11/1/18
  * Time: 8:18 PM
  * scottybox - scottfleming
+ * Example code to use findOne and findOneAndUpdate as
+ * well as getting the _id of a record.
+ *
  */
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -18,9 +21,7 @@ $dt->setTimestamp($timestamp); //adjust the object to correct timestamp
 $artist = 'Blondie';
 $title  = 'One Way Or Another';
 
-//$item = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID( $myOid )]);
-
-$find = $collection->findOne(
+$results = $collection->findOne(
     ['$and'    =>   [
         ['artist'    => $artist],
         ['title'     => $title ]
@@ -29,27 +30,9 @@ $find = $collection->findOne(
 );
 
 
-echo "first_played : ". $find->first_played !== null ? $find->first_played : 'first_played is null.<br/>';
+#echo "first_played : ". $results->first_played !== null ? $results->first_played : 'first_played is null.<br/>';
 
-
-// Now update the content values, because I can't seem to
-// do both in a single call.
-// update num_plays by 1
 /*
-$update = $collection->findOneAndUpdate(
-    ['$and'    =>   [
-                        ['artist'    => $artist],
-                        ['title'     => $title ]
-                    ]
-    ],
-    [
-        '$inc' => ['num_plays' => 1 ]
-    ],
-    ['upsert'   => true]
-
-);
-*/
-
 $results = $collection->findOneAndUpdate(
     ['$and'    =>   [
         ['artist'    => $artist],
@@ -66,9 +49,11 @@ $results = $collection->findOneAndUpdate(
     ],
     ['upsert', true]
 );
+*/
 
-
+// using _id as results for updates
 $myOid = (string) $results->_id;
+// $item = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID( $myOid )]);
 
 echo "OID: ". $myOid. "<br/>";
 echo "artist: " . $results->artist . "<br/>";

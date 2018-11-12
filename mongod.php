@@ -8,17 +8,23 @@
 
 //ini_set('display_errors', 1);
 //error_reporting(E_ALL);
-
 require 'mongodb/vendor/autoload.php';
 
 $output = $final =[];
 $table  = $_GET['table'];
 
 // init our collection client
-$collection = (new MongoDB\Client)->scottybox->$table;
-$results    = $collection->find();
+$collection     = (new MongoDB\Client)->scottybox->$table;
+$results        = $collection->find(
+    [],
+    ['$or' =>
+        ['masterId' => ['$ne' => 0]
+    ],
+        ['masterId' => ['$ne'=> null ] ]
+    ]);
+
 foreach( $results as $row){
-    array_push($output, $row);
+   array_push($output, $row);
 }
 
 $final['data'] = $output;
