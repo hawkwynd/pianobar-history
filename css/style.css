@@ -1050,6 +1050,11 @@ table.blueTable tfoot .links a {
   border-bottom: 1px dotted black;
   /* If you want dots under the hoverable text */
 }
+
+.tooltip:hover {
+  cursor: pointer;
+}
+
 /* Tooltip text */
 .tooltip .tooltiptext {
   visibility: hidden;
@@ -1070,6 +1075,15 @@ table.blueTable tfoot .links a {
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+.footer {
+  margin: 0 30px;
+}
+
+.stats-container {
+  margin: 0 33%;
+  padding: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */

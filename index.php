@@ -25,7 +25,8 @@
 
 <!-- container -->
 <div class="container">
-    <h1>Pianobar Music History</h1>
+    <h1>Pandora Reporter</h1>
+
     <header>
         <div class="menu">
             <ul>
@@ -35,6 +36,7 @@
 
         </div>
     </header>
+
     <table id="pianobarTable" class="display" style="width:100%">
         <thead>
         <tr>
@@ -48,14 +50,22 @@
         </thead>
         <tfoot>
         <tr>
-            <td colspan=6>2018 Pianobar Data Tracker by <a href="mailto:scott.s.fleming@gmail.com">Scott Fleming</a></td>
+            <td colspan=6>2018 Pandora Data Reporter by Scott Fleming</td>
         </tr>
         </tfoot>
     </table>
 </div><!--// container -->
 
+<div class="stats-container">
+    Statistical data in progress, soon will be right here showing global status of database and some other eye-bleeding content.
+</div>
+
 <div class="footer">
     <a href="loved.php">View Loved Songs</a>
 </div><!-- // footer -->
+
+
+
+
 </body>
 </html>

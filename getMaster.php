@@ -20,7 +20,7 @@ $output         = [];
 $bandsToFilter  = array('Boston', 'Styx', 'Incubus', 'Eagles', 'Kenny Wayne Shepherd',
                         'Journey', 'Chicago', 'Saga','A Flock of Seagulls',
                         'John Mayall & The Bluesbreakers','Nirvana','Oasis','Argent','Band Of Horses',
-                        'UK'
+                        'UK','Alice In Chains'
                     );
 
 $tz             = 'America/Chicago';

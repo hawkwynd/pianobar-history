@@ -36,5 +36,7 @@
      {"stationName":"Shakedown Street",
          "description":"Features mild rhythmic syncopation, intricate melodic phrasing, mixed acoustic and electric instrumentation, major key tonality, an electric guitar solo, a dynamic male vocalist, electric pianos, a prominent saxophone part, prominent percussion, upbeat lyrics, vocal harmonies and and many other similarities identified in the Music Genome Project."},
      {"stationName":"The Rolling Stones Radio",
-         "description":"Features electric rock instrumentation, a subtle use of vocal harmony, repetitive melodic phrasing, extensive vamping, mixed minor & major key tonality, a vocal-centric aesthetic, electric guitar riffs, an electric guitar solo, an emotional male lead vocal performance, a gravelly male vocalist, subtle use of acoustic piano, prominent percussion and and many other similarities identified in the Music Genome Project."}
+         "description":"Features electric rock instrumentation, a subtle use of vocal harmony, repetitive melodic phrasing, extensive vamping, mixed minor & major key tonality, a vocal-centric aesthetic, electric guitar riffs, an electric guitar solo, an emotional male lead vocal performance, a gravelly male vocalist, subtle use of acoustic piano, prominent percussion and and many other similarities identified in the Music Genome Project."},
+     {"stationName":"Crunchy Nuggets",
+        "description":"Features hard rock roots, a subtle use of vocal harmony, extensive vamping, a clear focus on recording studio production, minor key tonality, electric guitar riffs and and many other similarities identified in the Music Genome Project"}
 ]
