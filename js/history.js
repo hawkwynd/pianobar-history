@@ -6,19 +6,17 @@
  *
  */
 $(document).ready(function() {
-
     var info = false;
-
 
     $('#pianobarTable').dataTable({
         "language": {
             "search"        : "Find (almost) anything ",
-            "info"          : "Showing _START_ to _END_ of _TOTAL_ songs",
-            "lengthMenu"    : "Show _MENU_ songs",
-            "zeroRecords"   : "Yeah, I'm not finding that one, sorry.",
+            "info"          : "Showing _START_ to _END_ of _TOTAL_ records",
+            "lengthMenu"    : "Show _MENU_ records",
+            "zeroRecords"   : "Yeah... I'm not finding that one, sorry.",
             "loadingRecords": "Loading songs...",
             "processing"    : "Processing...",
-            "infoFiltered"  : "(filtered from _MAX_ total songs)",
+            "infoFiltered"  : "(filtered from _MAX_ total records)",
             "paginate": {
                 "first":      "First",
                 "last":       "Last",
@@ -27,7 +25,7 @@ $(document).ready(function() {
             }
         },
 
-        "lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]],
+        "lengthMenu": [[10, 20, 25, 50, 100, 200], [10, 20, 25, 50, 100, 200]],
         pageLength: 10,
         order: [[5, "desc"]],
         ajax: "mongod.php?table=pianobar",
@@ -35,10 +33,10 @@ $(document).ready(function() {
         columns : [
             {data: "masterId",
                 "render" : function(data){
-                    if(data){
+                    if( data > 0 ){
                         info = false;
                         return '<a href="#" class="modalLink" id='+data+' >Info</a>';
-                    } else{
+                    } else {
                         info = true;
                         return '';
                     }
@@ -56,7 +54,15 @@ $(document).ready(function() {
             {className: "title" ,  data : "title"},
             {className : "album" , data : "album"},
             {data : "genre"},
-            {data : "year"},
+            {data: "loveDate",
+                "render": function (data) {
+                    var date = new Date(data);
+                    var month = date.getMonth() + 1;
+                    return (month.length > 1 ? "0" + month : month) + "/" +
+                        (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + "/" + date.getFullYear()+ "&nbsp;" +
+                        (date.getHours() < 10 ? ("0"+date.getHours()) : date.getHours())+ ":" +
+                        (date.getMinutes() < 10 ? ("0"+date.getMinutes()) : date.getMinutes()) ;
+                }}
         ]
     });
 
@@ -82,6 +88,11 @@ $(document).ready(function() {
 
         }
     }
+
+
+    // footer stats call
+    getFooterStats();
+
 
     // ---------------------------------------------------
     // Get just the artist excerpt from Wikipedia's excerpt
@@ -111,6 +122,25 @@ $(document).ready(function() {
     });
 
 
+    // The about modal window functions
+
+    $(document).on('click', '.aboutLink', function() {
+        modal.style.display = "block";
+        $('.content-container').empty();
+        $('.lds-heart').hide();
+
+        $.ajax({
+            type: 'GET',
+            url: 'about.php',
+            success: function (output) {
+                $('.content-container').append(output);
+            }
+        });
+
+
+    });
+
+
     // The magic happens here to create a modal and populate it from
     // the json data returned by getMaster.php
     // and make a few calls back to the server for other content
@@ -132,7 +162,6 @@ $(document).ready(function() {
 
         getMaster();
 
-
         function getMaster(){
         $.ajax({
             type: 'GET',
@@ -142,11 +171,18 @@ $(document).ready(function() {
                 $('.lds-heart').hide();
 
                 var content = $.parseJSON(output);
+               // console.log(content);
 
                 $('.content-container').append('<h2 id=artist_name>'+content.artist.name+'</h2>');
-                if(content.metadata.coverImg) $('.content-container').append(
-                    '<div class="modalImg"><img src="' + content.metadata.coverImg + '"></div>'
-                );
+
+                if(content.metadata.coverImg != 'https://img.discogs.com/images/spacer.gif'){
+
+                    $('.content-container').append(
+                     '<div class="modalImg zoom">' +
+                         '<img src="' + content.metadata.coverImg + '"></div>');
+                }
+
+
                 $('.content-container').append('<div class="wiki">Title: <b><i>' + songTitle + '</i></b></div>');
 
                 // Get The album
@@ -164,37 +200,43 @@ $(document).ready(function() {
                 // formats
                 if(content.metadata.formats)$('.content-container').append('<div class="wiki formats">Media: '+content.metadata.formats+'</div>');
 
+                //console.log(content);
                 // station name stats
+                var playresults = getPlays(content.artist.name);
+                //console.log(playresults);
+
                 if(content.core.stationName) {
-                    $('.content-container').append('<div class="wiki">Pandora Station: <b>' + content.core.stationName + '</b></div>');
+                    $('.content-container').append('<div class="wiki tooltip">Last Station: <b>' +
+                        content.core.stationName + '</b><span class="tooltiptext"><p><b>'+ content.core.stationName +
+                        '</b></p>' + content.core.stationDescription +
+                        '</span></div>');
                 }
 
                 if(content.core.num_plays){
-                    $('.content-container').append('<div class="PstatsHeader">'+ content.artist.name +' nerdly statistics</div>')
+                    $('.content-container').append('<div class="PstatsHeader">Statistics</div>');
 
                     // first appeared date
-                    if(content.core.first_played) $('.content-container').append('<div class="wiki Pstats"><i>' + songTitle +
-                        '</i> first appeared: ' + content.core.first_played + '</div>');
+                    if(content.core.first_played) $('.content-container').append('<div class="wiki Pstats">Song first appeared: ' + content.core.first_played + '</div>');
 
                     // total plays by pianobar
-                    if(content.core.num_plays) {
-                        $('.content-container').append('<div class="wiki Pstats"><i>' +songTitle+ '</i> appearances: '+ content.core.num_plays + '</div>');
+                    /*if(content.core.num_plays) {
+                        $('.content-container').append('<div class="wiki Pstats">Song appearances: '+ content.core.num_plays + '</div>');
                         // last played date
+                    */
                         if(content.core.num_plays > 1){
-                            $('.content-container').append('<div class="wiki Pstats">Last appeared: ' + content.core.last_played + '</div>');
-                        }
+                            $('.content-container').append('<div class="wiki Pstats">Song last appeared: ' + content.core.last_played + '</div>');
                     }
+               } // if content.core.num_plays
 
-                    // plays per artist
-                    var playresults = getPlays(content.artist.name);
-                    if(playresults.plays){
-                        $('.content-container').append('<div class="wiki Pstats"><i>' + content.artist.name +
-                            '</i> appearances to date: ' + playresults.plays + ' (' + playresults.rating +'%)</div>');
-                    }
+                // ------------ Artists Statistics -----------------
 
-                } // if content.core.num_plays
 
-                // show lyrics
+                $('.content-container').append('<div class="wiki Pstats">' + content.artist.name + ' apperances: ' + playresults.artist_hit_count + '</div>');
+                $('.content-container').append('<div class="wiki Pstats">' +
+                    content.artist.name +' total plays: ' + playresults.allsongs_played_count + '</div>');
+                $('.content-container').append('<div class="wiki Pstats">Play Percentile: '+ playresults.artist_percentile + '</div>');
+
+                // show lyrics -----------------------------------------------
                 if(content.lyrics.length > 50) {
                     $('.content-container').append(
                         '<div class="wrap-collabsible">' +
@@ -232,6 +274,22 @@ $(document).ready(function() {
                     $('.content-container').append(members);
                 }
 
+                //--------- Song List of artist played with count ------------
+                var title_count = '<section><table class="blueTable"><thead><tr><th>Title</th><th>Station</th><th>Plays</th></tr></thead>';
+
+                $.each(playresults.count_per_title, function(k, v){
+                    title_count += '<tr><td>' + v.title + '</td><td>'+ v.stationName +'</td><td>'+ v.count + '</td></tr>';
+                });
+
+                title_count += '</table></section>';
+
+                var songlist = '<div class="wrap-collabsible songlist-collabsible"><input id="toggle-songlist" type="checkbox" class="toggle">' +
+                    '<label for="toggle-songlist">'+ content.artist.name + ' played songs tally</label>' +
+                    '<div class="expand">' + title_count + '</div></div>';
+
+                $('.content-container').append(songlist);
+
+                // ----------- Youtube section ------------------------------------
                 getVideo(content.artist.name, songTitle); // call the video ajax here
 
             },
@@ -281,7 +339,7 @@ $(document).ready(function() {
         function getPlays(artist) {
             var result;
             $.ajax({
-                url:"stats.php?artist="+artist,
+                url:"stats.php?artist=" + artist,
                 async: false,
                 success:function(data) {
                     result = $.parseJSON(data);
@@ -289,9 +347,29 @@ $(document).ready(function() {
             });
             return result;
         }
-
-
     });
+
+    // footer statistical data display
+    function getFooterStats(){
+        var result;
+        $.ajax({
+           url: "stats.php",
+            async: false,
+            success:function(data) {
+                result = $.parseJSON(data);
+
+                $('.stats-container').append('<div class="footerStats">' +
+                    '<span>Stations: ' + result.channelcount.toLocaleString() + '</span>'+
+                    '<span>Artists: ' + result.artistcount.toLocaleString() + '</span>'+
+                    '<span>Titles: ' + result.titlecount.toLocaleString() + '</span>' +
+                    '<span>Albums: ' + result.albumcount.toLocaleString() + '</span>' +
+                    '<span>Genres: ' + result.genrecount.toLocaleString() + '</span>' +
+                    '<span>Labels: ' + result.labelcount.toLocaleString() + '</span>' +
+                    '</div>');
+            }
+        });
+    }
+
 
     // Youtube player and download function
     $(document).on('click', '.youtubeLink', function () {

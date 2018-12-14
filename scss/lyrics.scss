@@ -14,13 +14,19 @@
 
 // collapsing div styling area begins
 
-.wrap-collabsible  {
+
+.wrap-collabsible{
   width: 55%;
   margin-top: 15px;
 }
 
-.members-collabsible, .info-collabsible{
+.members-collabsible, .info-collabsible, .pianobar-collabsible {
   width: 95%;
+  margin-top: 5px;
+}
+
+.songlist-collabsible {
+  width: 55%;
   margin-top: 5px;
 }
 
@@ -40,11 +46,11 @@
   border-radius: px;
   transition: all 0.25s ease-out;
 }
-.members-collabsible .info-collabsible label{
+.members-collabsible .info-collabsible .pianobar-collabsible label{
   text-align: left;
 }
 
-.wrap-collabsible .info-collabsible label:hover {
+.wrap-collabsible .info-collabsible .pianobar-collabsible label:hover {
   color: #fcff19;
 }
 
@@ -73,7 +79,14 @@
   margin-top: -35px;
 }
 
-.members-collabsible section, .info-collabsible section{
+.songlist-collabsible section{
+  margin-top: 4px;
+}
+.songlist-collabsible section div{
+  line-height: 20px;
+}
+
+.members-collabsible section, .info-collabsible section, .pianobar-collabsible section{
   margin-top: 2px;
 }
 
@@ -86,3 +99,13 @@
 }
 
 // collapsing div styling area begins
+
+// about collapsable sections
+.wrap-collabsible-about section {
+  background: rgba(214, 214, 214, 0.20);
+  border-bottom: 2px solid rgba(91, 91, 91, 0.44);
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  padding: .5rem 1rem 1.5rem 1rem;
+  //margin-top: -35px;
+}

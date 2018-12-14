@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html>
 <head>
-    <title>Pianobar History</title>
+    <title>Pandora Reporter</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -11,32 +11,31 @@
 </head>
 <body>
 
-<!-- The Modal -->
+<!-- modal -->
 <div id="myModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
         <span class="close">&times;</span>
         <div class="lds-heart">
             <div></div>
-        </div>
-
+        </div><!-- lds-heart-->
         <div class="content-container"></div>
+    </div><!-- modal-content -->
+</div><!--// modal -->
 
-    </div>
-</div>
-
-<!-- the container -->
+<!-- container -->
 <div class="container">
-    <h1>Pianobar Music History</h1>
-    <header>
+    <h1>Pandora Reporter</h1>
+
+      <header>
         <div class="menu">
             <ul>
-                <li><a href="loved.php">Loved songs</a></li>
-                <li><a href="">Menu 2</a></li>
+                <li><a class="aboutLink">About</a></li>
             </ul>
 
         </div>
     </header>
+
     <table id="pianobarTable" class="display" style="width:100%">
         <thead>
         <tr>
@@ -45,19 +44,16 @@
             <th>Title</th>
             <th>Album</th>
             <th>Genre</th>
-            <th>Released</th>
+            <th>Played</th>
         </tr>
         </thead>
         <tfoot>
         <tr>
-            <td colspan=6>2018 Pianobar Data Tracker by <a href="mailto:scott.s.fleming@gmail.com">Scott Fleming</a></td>
+            <td colspan=6><div class="stats-container"></div></td>
         </tr>
         </tfoot>
     </table>
-</div><!-- // the container -->
-
-<div class="footer">
-    <a href="loved.php">View Loved Songs</a>
-</div>
+</div><!--// container -->
+<div class="footer"></div><!-- // footer -->
 </body>
 </html>
