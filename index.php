@@ -50,15 +50,13 @@
         </thead>
         <tfoot>
         <tr>
-            <td colspan=6>2018 Pandora Data Reporter by Scott Fleming</td>
+            <td colspan=6><div class="stats-container"></div></td>
         </tr>
         </tfoot>
     </table>
 </div><!--// container -->
 
-<div class="stats-container">
-    Statistical data in progress, soon will be right here showing global status of database and some other eye-bleeding content.
-</div>
+
 
 <div class="footer">
     <a href="loved.php">View Loved Songs</a>

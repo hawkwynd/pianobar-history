@@ -16,8 +16,10 @@
 // TODO: Edit/Update/Delete records functions on the back end
 // TODO: Require authentication to do this.
 
+// mongodb connection
 require 'mongodb/vendor/autoload.php';
 
+// Discogs api credentials
 $consumerKey        = "jaRkJhfCzjSmakRoGyjP";
 $consumerSecret     = "MGSKueXgidqwXOxbmmtSOGfUoFHtXdfC";
 $table              = $_POST['collection'];
@@ -40,7 +42,7 @@ $resp               = curl_exec($curl);
 curl_close($curl);
 
 $out                = json_decode($resp);
-$results            = $out->results[0]; // just the first row.
+$results            = $out->results[0]; // just the first row of content returned.
 $id                 = $results->id;
 $master_id          = $results->master_id;
 $year               = $results->year;
@@ -58,6 +60,7 @@ $timestamp          = time();
 $dt                 = new DateTime("now", new DateTimeZone($tz));  //first argument "must" be a string
 $dt->setTimestamp($timestamp); //adjust the object to correct timestamp
 
+// mongo query to find by artist and title
 $find = $collection->findOne(
     ['$and'    =>   [
         ['artist'    => $_POST['artist']],
@@ -65,11 +68,13 @@ $find = $collection->findOne(
         ]
     ]
 );
-// -------------- Notes to my former self ------------------------------------------------------------------------------
-// Only perform the next stuff if we have a valid master id from discogs.com
-//----------------------------------------------------------------------------------------------------------------------
+
+// -------------- Notes to my former self ---------------------------------------------
+// Only perform the findOneAndUpdate() *if we have a valid master id* from discogs.com
+//-------------------------------------------------------------------------------------
 
 if($results->master_id):
+
         $updateResult = $collection->findOneAndUpdate(
             ['$and'    =>   [
                                 ['artist'    => $_POST['artist']],
@@ -81,7 +86,7 @@ if($results->master_id):
                             'artist'        => $_POST['artist'],
                             'loveDate'      => $dt->format('m-d-y g:i:s a'),
                             'album'         => $_POST['album'],
-                            'stationName'   => $_POST['stationName'],
+                            'stationName'   => trim($_POST['stationName']),
                             'id'            => $id,
                             'masterId'      => $master_id,
                             'style'         => $style,
@@ -116,9 +121,13 @@ if($results->master_id):
     );
 endif;
 
+exit; // shut the door on your way out..
 
-
-exit;
+/**
+ * @param $s
+ * @return mixed
+ * wikidefinition -- returns json format of results from the query searching for
+ */
 
 function wikidefinition($s) {
     $url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=&format=json&titles=".urlencode($s);

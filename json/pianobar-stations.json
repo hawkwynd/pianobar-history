@@ -38,5 +38,13 @@
      {"stationName":"The Rolling Stones Radio",
          "description":"Features electric rock instrumentation, a subtle use of vocal harmony, repetitive melodic phrasing, extensive vamping, mixed minor & major key tonality, a vocal-centric aesthetic, electric guitar riffs, an electric guitar solo, an emotional male lead vocal performance, a gravelly male vocalist, subtle use of acoustic piano, prominent percussion and and many other similarities identified in the Music Genome Project."},
      {"stationName":"Crunchy Nuggets",
-        "description":"Features hard rock roots, a subtle use of vocal harmony, extensive vamping, a clear focus on recording studio production, minor key tonality, electric guitar riffs and and many other similarities identified in the Music Genome Project"}
+        "description":"Features hard rock roots, a subtle use of vocal harmony, extensive vamping, a clear focus on recording studio production, minor key tonality, electric guitar riffs and and many other similarities identified in the Music Genome Project"},
+     {"stationName": "Marla Loves Carrie",
+     "description" : "Features alt. country qualities, a subtle use of vocal harmony, mixed acoustic and electric instrumentation, minor key tonality, a vocal-centric aesthetic, electric guitar riffs, romantic lyrics and and many other similarities identified in the Music Genome Project."},
+     {"stationName":"Christmas Traditional Radio",
+     "description":"Features pop vocal arrangements, ensemble horns, ensemble strings and and many other similarities identified in the Music Genome Project. It's Christmas music, ya know?"},
+     {"stationName":"Rockin' Holidays Radio",
+     "description":"features jazz vocals, ensemble horns, electric guitar parts, a swing feel, rock n' roll Influences and and many other similarities identified in the Music Genome Project. Christmas music, man!"},
+     {"stationName":"QuickMix",
+     "description": "Features a mix of music from several stations, including some music which you don't normally get to hear, in the Music Genome Project."}
 ]

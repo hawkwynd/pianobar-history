@@ -1,0 +1,93 @@
+<div>
+    <pre>
+    #!/bin/bash
+
+    #INIT VARS
+    dir=$HOME/Dropbox/pianobar
+    WORDFILE=$HOME/Dropbox/pianobar/wordfile
+    LOVEFILE=$HOME/Dropbox/pianobar/lovefile
+    COVERART=$HOME/dropbox/pianorbar/coverArt
+
+    timestamp=`date +%s`
+
+    # create variables
+
+    while read L; do
+    k="`echo "$L" | cut -d '=' -f 1`"
+    v="`echo "$L" | cut -d '=' -f 2`"
+    export "$k=$v"
+    done < <(grep -e '^\(title\|artist\|album\|stationName\|songStationName\|pRet\|pRetStr\|wRet\|wRetStr\|songDuration\|songPlayed\|rating\|coverArt\|stationCount\|station[0-9]*\)=' /dev/stdin) # don't overwrite $1...
+
+    # grab the lyrics for title artist from our great script
+    # LYRICS=`python3 /home/scott/lyrics-crawler/get-lyric.py "$title" "$artist"`
+    # LYRICS=''
+
+    # Listen for action words and respond
+    case "$1" in
+
+    songstart)
+    printf "%b" "   \e[1;38;5;82m Title: $title \n    \e[1;96mAlbum: $album \e[0m\n"
+
+    LYRICS=`python3 /home/scott/lyrics-crawler/get-lyric.py "$title" "$artist"`
+    curl -d "collection=pianobar&title=$title&album=$album&artist=$artist&stationName=$stationName&rating=$rating&lyrics=$LYRICS" http://scottybox.tech
+    ;;
+
+    songfinish)
+
+    # build announcer text from wordfile and make it randomly select a line
+    ANNOUNCE=`cat $WORDFILE | shuf -n 1`
+    printf "%b" "\n|>  \e[1;90m  $ANNOUNCE  \e[0m  \n\n"
+    ;;
+
+    songlove)
+    title_clean=${title//\'/}
+    album_clean=${album//\'/}
+    newalbum=${album/,/.}
+
+    # Lets shoot the data into the mongo love collection
+    curl -d "collection=lovedSongs&title=$title&album=$album&artist=$artist&stationName=$stationName&rating=$rating&lyrics=$LYRICS" https://scottybox.tech
+
+
+    # display the lyrics we get
+    # printf "%b" "$LYRICS \n"
+
+    # csv file structure and add a line to the csv file. This should go away, because
+    # we're storing all this info and more into mongodb
+
+    LOVESONG=`cat $LOVEFILE | shuf -n 1`
+    printf "%b" "   \e[1;91m $LOVESONG \e[0m\n   \e[1;96m Artist: $artist \n   \e[1;38;5;82m Title: $title\n    \e[1;96mAlbum: $album\e[0m\n"s
+
+    # add to csv file in dropbox
+    newalbum=${album/,/./}
+    newartist=${artist/,/./}
+    newtitle=${title/,/./}
+
+    # echo "$newartist,$newtitle,$newalbum" >> $HOME/Dropbox/pianobar/lovedSongs.csv
+    ;;
+
+    songshelf)
+    printf "%b" " \e[1;38;5;82m $title is now shelved in the sub-world of Limo mundania.\e[0m\n\n"
+
+    ;;
+
+    songban)
+    printf "%b" " \e[1;31m * * * BANNED $title FOR ALL TIME!!!! * * *\e[0m\n\n"
+
+    ;;
+
+    songbookmark)
+    # kdialog --title pianobar --passivepopup "BOOKMARKING '$title' by '$artist' on '$album'" 10
+    # we could use this somehow to markup our data for some other usage later.
+
+    ;;
+
+    artistbookmark)
+    # kdialog --title pianobar --passivepopup "BOOKMARKING '$artist'" 10
+    ;;
+
+    *)
+
+    ;;
+    esac
+</pre>
+</div>

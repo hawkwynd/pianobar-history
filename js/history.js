@@ -6,19 +6,17 @@
  *
  */
 $(document).ready(function() {
-
     var info = false;
-
 
     $('#pianobarTable').dataTable({
         "language": {
             "search"        : "Find (almost) anything ",
-            "info"          : "Showing _START_ to _END_ of _TOTAL_ songs",
-            "lengthMenu"    : "Show _MENU_ songs",
-            "zeroRecords"   : "Yeah, I'm not finding that one, sorry.",
+            "info"          : "Showing _START_ to _END_ of _TOTAL_ records",
+            "lengthMenu"    : "Show _MENU_ records",
+            "zeroRecords"   : "Yeah... I'm not finding that one, sorry.",
             "loadingRecords": "Loading songs...",
             "processing"    : "Processing...",
-            "infoFiltered"  : "(filtered from _MAX_ total songs)",
+            "infoFiltered"  : "(filtered from _MAX_ total records)",
             "paginate": {
                 "first":      "First",
                 "last":       "Last",
@@ -27,7 +25,7 @@ $(document).ready(function() {
             }
         },
 
-        "lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]],
+        "lengthMenu": [[10, 20, 25, 50, 100, 200], [10, 20, 25, 50, 100, 200]],
         pageLength: 10,
         order: [[5, "desc"]],
         ajax: "mongod.php?table=pianobar",
@@ -91,6 +89,11 @@ $(document).ready(function() {
         }
     }
 
+
+    // footer stats call
+    getFooterStats();
+
+
     // ---------------------------------------------------
     // Get just the artist excerpt from Wikipedia's excerpt
     // ---------------------------------------------------
@@ -119,6 +122,25 @@ $(document).ready(function() {
     });
 
 
+    // The about modal window functions
+
+    $(document).on('click', '.aboutLink', function() {
+        modal.style.display = "block";
+        $('.content-container').empty();
+        $('.lds-heart').hide();
+
+        $.ajax({
+            type: 'GET',
+            url: 'about.php',
+            success: function (output) {
+                $('.content-container').append(output);
+            }
+        });
+
+
+    });
+
+
     // The magic happens here to create a modal and populate it from
     // the json data returned by getMaster.php
     // and make a few calls back to the server for other content
@@ -139,7 +161,6 @@ $(document).ready(function() {
         $('.content-container').hide();
 
         getMaster();
-
 
         function getMaster(){
         $.ajax({
@@ -326,9 +347,29 @@ $(document).ready(function() {
             });
             return result;
         }
-
-
     });
+
+    // footer statistical data display
+    function getFooterStats(){
+        var result;
+        $.ajax({
+           url: "stats.php",
+            async: false,
+            success:function(data) {
+                result = $.parseJSON(data);
+
+                $('.stats-container').append('<div class="footerStats">' +
+                    '<span>Stations: ' + result.channelcount.toLocaleString() + '</span>'+
+                    '<span>Artists: ' + result.artistcount.toLocaleString() + '</span>'+
+                    '<span>Titles: ' + result.titlecount.toLocaleString() + '</span>' +
+                    '<span>Albums: ' + result.albumcount.toLocaleString() + '</span>' +
+                    '<span>Genres: ' + result.genrecount.toLocaleString() + '</span>' +
+                    '<span>Labels: ' + result.labelcount.toLocaleString() + '</span>' +
+                    '</div>');
+            }
+        });
+    }
+
 
     // Youtube player and download function
     $(document).on('click', '.youtubeLink', function () {

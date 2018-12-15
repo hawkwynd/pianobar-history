@@ -5,7 +5,8 @@ composer.json:
 
 {
     "require": {
-        "google/apiclient": "~2.0",         "mongodb/mongodb": "^1.0.0"
+        "google/apiclient" : "~2.0",
+        "mongodb/mongodb"  : "^1.0.0"
     }
 }
 
@@ -20,7 +21,6 @@ mongoimport -d scottybox -c pianobar --type csv --file filename.csv --headerline
 
 ### SET UP STEPS FOR PIANOBAR application #########
 
-
 How to install Mongodb PHP extension in Ubuntu 16.04 LTS with php5.x
 
 `sudo apt-get install php-mongodb`
@@ -28,11 +28,8 @@ How to install Mongodb PHP extension in Ubuntu 16.04 LTS with php5.x
 
 ########## FOR php7:
 $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
-
 $ echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
-
 $ sudo apt-get update
-
 $ sudo apt-get install -y mongodb-org
 
 Create file mongodb.service in /etc/systemd/system/ by entering the command:
@@ -55,7 +52,6 @@ WantedBy=multi-user.target
 Then enter the following commands:
 
 $ sudo systemctl start mongodb
-
 $ sudo systemctl enable mongodb
 
 ####### Installing the mongo-php driver:
@@ -68,6 +64,7 @@ Also you might receive error: phpize not found. Phpize is a command which is use
 Then in the php.ini file which is in /etc/php/7.0/apache2 directory, add the mongo db extension:
 
 $ sudo nano /etc/php/7.0/apache2/php.ini
+
 Add the following line in the file:
 
 extension = mongo.so;

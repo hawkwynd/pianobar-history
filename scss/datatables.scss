@@ -74,3 +74,11 @@
 .select-items div:hover, .same-as-selected {
   background-color: rgba(0, 0, 0, 0.1);
 }
+
+// dataTable thead
+
+
+table.dataTable thead th {
+  background-color: cornflowerblue;
+  padding: 10px 0px !important;
+}
