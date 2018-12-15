@@ -20,7 +20,11 @@
   margin-top: 15px;
 }
 
+<<<<<<< HEAD
 .members-collabsible, .info-collabsible {
+=======
+.members-collabsible, .info-collabsible, .pianobar-collabsible {
+>>>>>>> 333ecd4edd41365429429ca57ee4b4ba52c61e0a
   width: 95%;
   margin-top: 5px;
 }
@@ -46,11 +50,11 @@
   border-radius: px;
   transition: all 0.25s ease-out;
 }
-.members-collabsible .info-collabsible label{
+.members-collabsible .info-collabsible .pianobar-collabsible label{
   text-align: left;
 }
 
-.wrap-collabsible .info-collabsible label:hover {
+.wrap-collabsible .info-collabsible .pianobar-collabsible label:hover {
   color: #fcff19;
 }
 
@@ -86,7 +90,11 @@
   line-height: 20px;
 }
 
+<<<<<<< HEAD
 .members-collabsible section, .info-collabsible section{
+=======
+.members-collabsible section, .info-collabsible section, .pianobar-collabsible section{
+>>>>>>> 333ecd4edd41365429429ca57ee4b4ba52c61e0a
   margin-top: 2px;
 }
 
@@ -99,3 +107,13 @@
 }
 
 // collapsing div styling area begins
+
+// about collapsable sections
+.wrap-collabsible-about section {
+  background: rgba(214, 214, 214, 0.20);
+  border-bottom: 2px solid rgba(91, 91, 91, 0.44);
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  padding: .5rem 1rem 1.5rem 1rem;
+  //margin-top: -35px;
+}

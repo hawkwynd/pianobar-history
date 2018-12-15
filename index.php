@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html>
 <head>
-    <title>Pianobar History</title>
+    <title>Pandora Reporter</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -27,11 +27,14 @@
 <div class="container">
     <h1>Pandora Reporter</h1>
 
+<<<<<<< HEAD
     <header>
+=======
+      <header>
+>>>>>>> 333ecd4edd41365429429ca57ee4b4ba52c61e0a
         <div class="menu">
             <ul>
-                <li><a href="loved.php">Loved songs</a></li>
-                <li><a href="">Menu 2</a></li>
+                <li><a class="aboutLink">About</a></li>
             </ul>
 
         </div>
@@ -55,6 +58,7 @@
         </tfoot>
     </table>
 </div><!--// container -->
+<<<<<<< HEAD
 
 
 
@@ -65,5 +69,8 @@
 
 
 
+=======
+<div class="footer"></div><!-- // footer -->
+>>>>>>> 333ecd4edd41365429429ca57ee4b4ba52c61e0a
 </body>
 </html>
