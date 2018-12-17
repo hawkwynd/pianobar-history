@@ -372,7 +372,7 @@ h3.ytHeader {
     opacity: 0; }
   100% {
     opacity: 1;
-    color: #1b71a4; } }
+    color: cornflowerblue; } }
 @-o-keyframes flickerAnimation {
   0% {
     opacity: 1;
@@ -381,7 +381,7 @@ h3.ytHeader {
     opacity: 0; }
   100% {
     opacity: 1;
-    color: #1b71a4; } }
+    color: cornflowerblue; } }
 @-moz-keyframes flickerAnimation {
   0% {
     opacity: 1;
@@ -390,7 +390,7 @@ h3.ytHeader {
     opacity: 0; }
   100% {
     opacity: 1;
-    color: #1b71a4; } }
+    color: cornflowerblue; } }
 @-webkit-keyframes flickerAnimation {
   0% {
     opacity: 1;
@@ -399,7 +399,7 @@ h3.ytHeader {
     opacity: 0; }
   100% {
     opacity: 1;
-    color: #1b71a4; } }
+    color: cornflowerblue; } }
 .animate-flicker {
   -webkit-animation: flickerAnimation 1s infinite;
   -moz-animation: flickerAnimation 1s infinite;
@@ -496,7 +496,7 @@ table.dataTable thead th {
   margin-left: 50px; }
 
 .PstatsHeader {
-  color: #1b71a4;
+  color: cornflowerblue;
   font-weight: 700;
   width: 40%;
   margin: 6px 32px; }

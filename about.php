@@ -12,12 +12,15 @@
 <div class="selfie-container">
     <img src="images/IMG_2161.jpg"/>
 </div>
-<p>This is a project I started out of sheer curiosity for both programming and data collection functions coupled with my ever-increasing yearn for music and the history behind the artists. Pandora is an excellent music streaming service, which provides a wide variety of music for millions of users across the world. It is the base for my quest to where I'm at now in this project.
-Even this documentation is a living object in the project - I am constantly adding to it to help provide you with as much information as possible about it's workings and the adventures I experienced while building it.
+<p>Pandora Reporter is a web development project I started out of sheer curiosity for both the love of programming and data collection functions coupled with my ever-increasing yearn for music and the history behind the artistsand the history of music I love. Pandora is an excellent music streaming service, which provides a wide variety of music for millions of users across the world. It is the base for my quest to where I'm at now in this project.
+Even this documentation is a living object in the project - I am constantly adding to it to help provide you with as much information as possible about it's inner workings and the adventures I experienced while building it.
 </p>
 <p>
-    The main drive for this project came when I discovered a command-line version of the client known as <a href="https://github.com/PromyLOPh/pianobar" target="_blank">Pianobar</a>. Pianobar provides access to the Pandora library without advertisements, and a great set of options that extend the functionality of Pandora's main features. Again, without ever hearing a single advertisement.
+    The main drive for my musical-data project came when I discovered a command-line application of the Pandora client known as <a href="https://github.com/PromyLOPh/pianobar" target="_blank">Pianobar</a>. Pianobar provides access to the Pandora library without advertisements, and a great set of options that extend the functionality of Pandora's main features. Again, without ever hearing a single advertisement. It offers the ability to customize the entire interface, with a limited set of bash scripting (as I learn it becomes less limiting) to perform some really useful and entertaining features I have come to have a sort of father-like pride of.
 </p>
+<p>As I grow my skillset and increase my breadth of knowledge of how things work, and what to do when they don't, I am ever challenged by the next cool thing to increase the fun with this project. I am anxious to take the `next step` in the evolution of this great project.</p>
+
+<div style="display:block; height: 50px"></div>
 <div class="wrap-collabsible members-collabsible">
     <input id="toggle-members" type="checkbox" class="toggle">
     <label for="toggle-members">Under The Hood</label>
@@ -34,7 +37,7 @@ Even this documentation is a living object in the project - I am constantly addi
             </div>
             <div class="memberName" excerpt="">Google APIclient</div>
             <div class="excerpt">
-                The Google API Client Library work with Google APIs such as Google+, Drive, or YouTube.
+                The <a target="_blank" href="https://github.com/googleapis/google-api-php-client">Google API Client Library for PHP</a> work with Google APIs such as Google+, Drive, or YouTube.
                 Specifically, the API provides access to display the YouTube link to the corresponding song being queried and is passed to the youtube-dl functions for extracting the audio from the Youtube video as an mp3 file to be downloaded or played through the AudioPlayer (javascript) functions. It is a powerful api capable of finding even the most rare of music titles and/or artists.
             </div>
             <div class="memberName">youtube-dl</div>
@@ -58,14 +61,18 @@ Even this documentation is a living object in the project - I am constantly addi
 <!-- pianobar shares -->
 <div class="wrap-collabsible pianobar-collabsible">
     <input id="toggle-pianobar" type="checkbox" class="toggle">
-    <label for="toggle-pianobar">The Pianobar Modifications</label>
+    <label for="toggle-pianobar">Pianobar Modifications</label>
     <div class="expand">
         <section>
             <div class="memberName" excerpt="">eventcmd</div>
             <div class="excerpt">
-                The pianobar application runs on a small linux based computer in my home with it's sole job of just playing the music. It logs in to my Pandora account automatically, and begins playing the last played station. To date, it has over 25 different stations which I can change whenever I am in the mood for something different. Pianobar has a TON of additional functions, which I will not mention here to save time. <br/>
-                The `eventcmd` script sends song information from pianobar to the mongodb server as a _POST command, and contains the Title, Artist data as well as some other important information which is inserted (upserted) into the pianobar database. If mongo finds a matching song title and artist already exists, it performs an incremental uptick by one to the `num_played` field in the record, otherwise it inserts a new row into the table. Each time a new song is triggered within pianobar, it sends the data to the server for processing.
+                <p>The pianobar application runs on a small linux based computer in my home with it's sole job of just playing the music. It began playing continuously since November 11th, 2018. The eventcmnd script logs in to my Pandora account automatically, and begins playing the last played station, but offers the ability to change stations, or create new ones anytime. To date, it has over 25 different stations which I can change whenever I am in the mood for something different. Pianobar has a TON of additional functions, which I will not mention here to save time. </p>
+            <p>    The `eventcmd` script is read into pianobar and provide controls over display, and additional text-based functions. It also sends song information to a mongodb server as a POST command, and contains the Title, Artist data as well as some other important information which is inserted (upserted) into the pianobar database. Each time a new song is triggered within pianobar, it sends the data to the server for processing. If the mongo query matches the song title and artist already in the database, it performs an incremental uptick by one to the `num_played` field in the record, keeping a running counter of the times Pandora has played that song. Otherwise it inserts a new row into the table. </p>
+
+                <p>Here's the <a href="scripts/eventcmd.html" target="_blank">eventcmd script</a> in case you're wondering how that's written.</p>
+
             </div>
         </section>
     <div>
 </div>
+        <div style="display:block; height: 50px"></div>

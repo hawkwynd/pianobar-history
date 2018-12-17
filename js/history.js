@@ -53,8 +53,8 @@ $(document).ready(function() {
             },
             {className: "title" ,  data : "title"},
             {className : "album" , data : "album"},
-            {data : "genre"},
-            {data: "loveDate",
+            {data : "genre", className: "genre"},
+            {data: "loveDate", className: "loveDate",
                 "render": function (data) {
                     var date = new Date(data);
                     var month = date.getMonth() + 1;
