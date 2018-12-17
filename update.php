@@ -12,17 +12,21 @@
 //      error_reporting(E_ALL);
 //      ini_set('display_errors', 1);
 
+// TODO: Build and admin panel to manage the records.
+// TODO: Edit/Update/Delete records functions on the back end
+// TODO: Require authentication to do this.
+
+// mongodb connection
 require 'mongodb/vendor/autoload.php';
 
+// Discogs api credentials
 $consumerKey        = "jaRkJhfCzjSmakRoGyjP";
 $consumerSecret     = "MGSKueXgidqwXOxbmmtSOGfUoFHtXdfC";
 $table              = $_POST['collection'];
-$title              = urlencode( $_POST['title'] );
+$title              = urlencode( preg_replace('#\s*\[.+\]\s*#U', ' ', $_POST['title'] ) ); // remove (text)
 $artist             = urlencode( $_POST['artist'] );
 $lyrics             = $_POST['lyrics'];
 $curl               = curl_init();
-
-// get numcount of title & artist
 
 curl_setopt_array($curl,
     array(
@@ -38,7 +42,7 @@ $resp               = curl_exec($curl);
 curl_close($curl);
 
 $out                = json_decode($resp);
-$results            = $out->results[0]; // just the first row.
+$results            = $out->results[0]; // just the first row of content returned.
 $id                 = $results->id;
 $master_id          = $results->master_id;
 $year               = $results->year;
@@ -56,6 +60,7 @@ $timestamp          = time();
 $dt                 = new DateTime("now", new DateTimeZone($tz));  //first argument "must" be a string
 $dt->setTimestamp($timestamp); //adjust the object to correct timestamp
 
+// mongo query to find by artist and title
 $find = $collection->findOne(
     ['$and'    =>   [
         ['artist'    => $_POST['artist']],
@@ -63,15 +68,13 @@ $find = $collection->findOne(
         ]
     ]
 );
-// -------------- Notes to my former self ------------------------------------------------------------------------------
-//
-// firstplay field : If this field doesn't exist, create it and stick current date/time into it
-//                   to mark when it was first played. If it does exist keep the same value as it's record.
-// loveDate field  : update this field with the current timestamp, used as last_played later.
-//
-// Only perform the next stuff if we have a valid master id from discogs.com
-//----------------------------------------------------------------------------------------------------------------------
+
+// -------------- Notes to my former self ---------------------------------------------
+// Only perform the findOneAndUpdate() *if we have a valid master id* from discogs.com
+//-------------------------------------------------------------------------------------
+
 if($results->master_id):
+
         $updateResult = $collection->findOneAndUpdate(
             ['$and'    =>   [
                                 ['artist'    => $_POST['artist']],
@@ -83,7 +86,7 @@ if($results->master_id):
                             'artist'        => $_POST['artist'],
                             'loveDate'      => $dt->format('m-d-y g:i:s a'),
                             'album'         => $_POST['album'],
-                            'stationName'   => $_POST['stationName'],
+                            'stationName'   => trim($_POST['stationName']),
                             'id'            => $id,
                             'masterId'      => $master_id,
                             'style'         => $style,
@@ -96,11 +99,10 @@ if($results->master_id):
                             'catno'         => $catno,
                             'status'        => $id,
                             'label'         => $labels,
-                            'coverArt'      => isset($_POST['coverArt']) ? $_POST['coverArt'] : '',
+                            'coverArt'      => isset($_POST['coverArt']) ? $_POST['coverArt'] : null,
                             'lyrics'        => $lyrics,
-                            'first_played'  => $find->first_played !== null ? $find->first_played : $dt->format('m-d-y g:i:s a'),
-                            'last_played'   => $dt->format('m-d-y g:i:s a'),
-                            'num_plays'     => intval($find->num_plays) > 0 ? (intval($find->num_plays) +1 ) : intval($find->num_plays)
+                            'first_played'  => is_null($find->first_played) ? $dt->format('m-d-y g:i:s a'): $find->first_played,
+                            'last_played'   => $dt->format('m-d-y g:i:s a')
                          ]
             ],
             ['upsert'   => true]
@@ -117,10 +119,15 @@ if($results->master_id):
                 ],
                 ['upsert'   => true]
     );
-
 endif;
 
-exit;
+exit; // shut the door on your way out..
+
+/**
+ * @param $s
+ * @return mixed
+ * wikidefinition -- returns json format of results from the query searching for
+ */
 
 function wikidefinition($s) {
     $url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=&format=json&titles=".urlencode($s);

@@ -27,7 +27,11 @@
 <div class="container">
     <h1>Pandora Reporter</h1>
 
+<<<<<<< HEAD
+    <header>
+=======
       <header>
+>>>>>>> 333ecd4edd41365429429ca57ee4b4ba52c61e0a
         <div class="menu">
             <ul>
                 <li><a class="aboutLink">About</a></li>
@@ -54,6 +58,19 @@
         </tfoot>
     </table>
 </div><!--// container -->
+<<<<<<< HEAD
+
+
+
+<div class="footer">
+    <a href="loved.php">View Loved Songs</a>
+</div><!-- // footer -->
+
+
+
+
+=======
 <div class="footer"></div><!-- // footer -->
+>>>>>>> 333ecd4edd41365429429ca57ee4b4ba52c61e0a
 </body>
 </html>

@@ -5,7 +5,9 @@
  * scottybox - scottfleming
  */
 # https://music.youtube.com/watch?v=WEQnzs8wl6E
+
 $vidID      = $_GET['v'];
+
 $url        = 'https://music.youtube.com/watch?v='.$vidID;
 $template   = '/var/www/scottybox/html/pianobar/downloads/%(id)s.%(ext)s';
 $string     = ('youtube-dl --config-location /home/ubuntu/.config/youtube-dl ' . escapeshellarg($url));
@@ -23,6 +25,8 @@ fclose($pipes[2]);
 $ret = proc_close($process);
 
 $output = array('status' => $ret, 'errors' => $stderr, 'url_orginal'=>$url, 'output' => $stdout, 'command' => $string);
+
+
 
 foreach(preg_split("/((\r?\n)|(\r\n?))/", $output['output']) as $line){
     // do stuff with $line

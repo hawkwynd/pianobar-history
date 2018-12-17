@@ -12,6 +12,8 @@
 
 $consumerKey        = "jaRkJhfCzjSmakRoGyjP";
 $consumerSecret     = "MGSKueXgidqwXOxbmmtSOGfUoFHtXdfC";
+
+// Sample Search Options
 $album              = urlencode("Tuff Enuff");
 $title              = urlencode("Wrap It Up");
 $artist             = urlencode("The Fabulous Thunderbirds");
@@ -20,11 +22,13 @@ $artist             = urlencode("The Fabulous Thunderbirds");
 $curl = curl_init();
 // Set some options - we are passing in a useragent too here
 curl_setopt_array($curl, array(
-    CURLOPT_RETURNTRANSFER => 1,
-    CURLOPT_URL => "https://api.discogs.com/database/search?key=" .
+    CURLOPT_RETURNTRANSFER  => 1,
+    CURLOPT_URL             => "https://api.discogs.com/database/search?key=" .
     "$consumerKey&secret=$consumerSecret&track=$title&artist=$artist",
-    CURLOPT_USERAGENT => "pianobar/1.1"
+    CURLOPT_USERAGENT       => "pianobar/1.1"
 ));
+
+
 // Send the request & save response to $resp
 $resp = curl_exec($curl);
 // Close request to clear up some resources
@@ -32,8 +36,8 @@ curl_close($curl);
 
 echo "<pre>";
 
-$out = json_decode($resp);
-$results = $out->results[0]; // just the first row.
+$out        = json_decode($resp);
+$results    = $out->results[0]; // just the first row.
 
 print_r($results);
 
