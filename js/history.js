@@ -171,7 +171,6 @@ $(document).ready(function() {
                 $('.lds-heart').hide();
 
                 var content = $.parseJSON(output);
-               // console.log(content);
 
                 $('.content-container').append('<h2 id=artist_name>'+content.artist.name+'</h2>');
 
@@ -343,6 +342,8 @@ $(document).ready(function() {
                 async: false,
                 success:function(data) {
                     result = $.parseJSON(data);
+                    console.log(result);
+
                 }
             });
             return result;
@@ -359,6 +360,8 @@ $(document).ready(function() {
                 result = $.parseJSON(data);
 
                 $('.stats-container').append('<div class="footerStats">' +
+                    '<span><strong>Nerdly statistics</strong></span>' +
+                    '<span>Today\'s plays: ' + result.total_songs_today + '</span>' +
                     '<span>Stations: ' + result.channelcount.toLocaleString() + '</span>'+
                     '<span>Artists: ' + result.artistcount.toLocaleString() + '</span>'+
                     '<span>Titles: ' + result.titlecount.toLocaleString() + '</span>' +

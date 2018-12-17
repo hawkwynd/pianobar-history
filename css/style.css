@@ -935,7 +935,7 @@ table.blueTable tfoot .links a {
   margin: 0 30px; }
 
 .stats-container {
-  margin: 0 25%;
+  margin: 0px;
   padding: 10px; }
   .stats-container .footerStats {
     text-align: center; }
