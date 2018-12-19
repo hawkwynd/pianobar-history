@@ -20,8 +20,6 @@ Even this documentation is a living object in the project - I am constantly addi
 </p>
 <p>As I grow my skillset and increase my breadth of knowledge of how things work, and what to do when they don't, I am ever challenged by the next cool thing to increase the fun with this project. I am anxious to take the `next step` in the evolution of this great project.</p>
 
-<p>Here's the <a href="scripts/eventcmd.html" target="_blank">eventcmd script</a> in case you're wondering how that's written.</p>
-
 <div style="display:block; height: 50px"></div>
 <div class="wrap-collabsible members-collabsible">
     <input id="toggle-members" type="checkbox" class="toggle">
@@ -39,7 +37,7 @@ Even this documentation is a living object in the project - I am constantly addi
             </div>
             <div class="memberName" excerpt="">Google APIclient</div>
             <div class="excerpt">
-                The Google API Client Library work with Google APIs such as Google+, Drive, or YouTube.
+                The <a target="_blank" href="https://github.com/googleapis/google-api-php-client">Google API Client Library for PHP</a> work with Google APIs such as Google+, Drive, or YouTube.
                 Specifically, the API provides access to display the YouTube link to the corresponding song being queried and is passed to the youtube-dl functions for extracting the audio from the Youtube video as an mp3 file to be downloaded or played through the AudioPlayer (javascript) functions. It is a powerful api capable of finding even the most rare of music titles and/or artists.
             </div>
             <div class="memberName">youtube-dl</div>
@@ -63,7 +61,7 @@ Even this documentation is a living object in the project - I am constantly addi
 <!-- pianobar shares -->
 <div class="wrap-collabsible pianobar-collabsible">
     <input id="toggle-pianobar" type="checkbox" class="toggle">
-    <label for="toggle-pianobar">The Pianobar Modifications through eventcmd</label>
+    <label for="toggle-pianobar">Pianobar Modifications</label>
     <div class="expand">
         <section>
             <div class="memberName" excerpt="">eventcmd</div>
@@ -71,7 +69,10 @@ Even this documentation is a living object in the project - I am constantly addi
                 <p>The pianobar application runs on a small linux based computer in my home with it's sole job of just playing the music. It began playing continuously since November 11th, 2018. The eventcmnd script logs in to my Pandora account automatically, and begins playing the last played station, but offers the ability to change stations, or create new ones anytime. To date, it has over 25 different stations which I can change whenever I am in the mood for something different. Pianobar has a TON of additional functions, which I will not mention here to save time. </p>
             <p>    The `eventcmd` script is read into pianobar and provide controls over display, and additional text-based functions. It also sends song information to a mongodb server as a POST command, and contains the Title, Artist data as well as some other important information which is inserted (upserted) into the pianobar database. Each time a new song is triggered within pianobar, it sends the data to the server for processing. If the mongo query matches the song title and artist already in the database, it performs an incremental uptick by one to the `num_played` field in the record, keeping a running counter of the times Pandora has played that song. Otherwise it inserts a new row into the table. </p>
 
+                <p>Here's the <a href="scripts/eventcmd.html" target="_blank">eventcmd script</a> in case you're wondering how that's written.</p>
+
             </div>
         </section>
     <div>
 </div>
+        <div style="display:block; height: 50px"></div>

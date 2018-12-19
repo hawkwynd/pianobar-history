@@ -92,7 +92,6 @@ else:
     $regex              = new MongoDB\BSON\Regex ($today, 'ig');
     $todaysPlays        = $collection->count(['last_played' => $regex ] );
 
-
     $glbl = $collection->find();
     $artists = $channels = $genres = $titles = $albums = $labels =[];
 
