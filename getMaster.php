@@ -7,8 +7,8 @@
  * and includes wikipedia definitional info about the artist.
  * YES THIS IS THE DATAMINER!!!
  */
-//ini_set('display_errors', 1);
-//error_reporting(E_ALL);
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 require 'mongodb/vendor/autoload.php';
 
@@ -17,11 +17,7 @@ $consumerSecret = "MGSKueXgidqwXOxbmmtSOGfUoFHtXdfC";
 $masterID       = intval($_GET['id']); //339449
 $pianobar       = new stdClass(); // init our object
 $output         = [];
-$bandsToFilter  = array('Boston', 'Styx', 'Incubus', 'Eagles', 'Kenny Wayne Shepherd',
-                        'Journey', 'Chicago', 'Saga','A Flock of Seagulls',
-                        'John Mayall & The Bluesbreakers','Nirvana','Oasis','Argent','Band Of Horses',
-                        'UK','Alice In Chains'
-                    );
+$bandsToFilter  = array('Boston', 'Styx', 'Incubus', 'Eagles', 'Kenny Wayne Shepherd', 'Journey', 'Chicago', 'Saga','A Flock of Seagulls','John Mayall & The Bluesbreakers', 'Tom Petty & The Heartbreakers', 'Uriah Heep');
 
 $tz             = 'America/Chicago';
 $timestamp      = time();
@@ -33,6 +29,10 @@ $collection = (new MongoDB\Client)->scottybox->pianobar;
 $stations   = (new MongoDB\Client)->scottybox->stations;
 
 $results = $collection->find( ['masterId' => $masterID] );
+
+
+
+
 
 //$pianobar->_id = (string) $results->_id;
 
@@ -53,7 +53,7 @@ foreach ($results as $row) {
     $pianobar->core->stationName    = $row->stationName;
     $pianobar->core->title          = $row->title;
 
-    // find stationDescription
+    // find stationDescription from stationName
     $stationResults = $stations->find( ['stationName' => $row->stationName ]);
     foreach($stationResults as $station){
         $pianobar->core->stationDescription = $station->description;
@@ -135,7 +135,7 @@ foreach ($info->members as $member) {
     $wiki           = json_decode(wikidefinition($member->name));
 
     foreach ($wiki->query->pages as $content) {
-        $memberContent = filterWikiContent(strip_tags($content->extract), $member->name);
+        $memberContent = filterWikiContent(strip_tags($content->extract), $member->name, 'From a short name:');
     }
     // build array of band members
     array_push($pianobar->artist->members, array(

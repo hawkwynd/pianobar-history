@@ -6,15 +6,19 @@
  *
  * Display total plays for an artist queried overall.
  */
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 require 'mongodb/vendor/autoload.php';
-$artist             = $_GET['artist'];
+if (isset($_GET['artist'])) {
+    $artist             = $_GET['artist'];
+}
 $collection         = (new MongoDB\Client)->scottybox->pianobar;
 $collection_count   = $collection->count();
 $allSongsCount      = 0;
 $station_names      = $genres = $titles = $albums = $years = $albumdata = [];
 
-if($artist):
+if (isset($artist)):
 
         $results            = $collection->find( ['artist' => $artist],
                                                 ['projection' =>
@@ -30,6 +34,7 @@ if($artist):
                                             );
 
         $artistCount = $collection->count(['artist' => $artist]); // how many times does 'artist' appear in collection?
+
 
         foreach( $results as $row ){
             $allSongsCount += $row->num_plays;
@@ -72,7 +77,8 @@ if($artist):
             'artist_titles'             => $titles,
             'artist_albums'             => array_values(array_unique($albums)),
             'allsongs_played_count'     => $allSongsCount,
-            'count_per_title'           => $tCount,
+            'count_per_title'           => $tCount
+
         ));
 
 else:
@@ -81,8 +87,20 @@ else:
      * Global statistical data for footer
      */
 
+    // count today's total song plays.
+    $today              = date('m').'-'.date('d').'-'.date('y');
+    $regex              = new MongoDB\BSON\Regex ($today, 'ig');
+    $todaysPlays        = $collection->count(['last_played' => $regex ] );
+
+
     $glbl = $collection->find();
     $artists = $channels = $genres = $titles = $albums = $labels =[];
+
+    // find the top played artist/title and num_plays
+    $filter=[];
+    $options = ['sort' => ['num_plays' => -1]]; // -1 is for DESC
+    $result = $collection->findOne($filter, $options);
+
     foreach($glbl as $row){
         array_push($artists, $row->artist);
         array_push($channels, $row->stationName);
@@ -90,16 +108,21 @@ else:
         array_push($titles, $row->title);
         array_push($albums, $row->album);
         array_push($labels, $row->label);
-
     }
 
     $out = array(
-        'channelcount'  => count(array_unique($channels)),
-        'artistcount'   => count(array_unique($artists)),
-        'genrecount'   => count(array_unique($genres)),
-        'titlecount'   => count(array_unique($titles)),
-        'albumcount'    => count(array_unique($albums)),
-        'labelcount'    => count(array_unique($labels))
+        'channelcount'          => count(array_unique($channels)),
+        'artistcount'           => count(array_unique($artists)),
+        'genrecount'            => count(array_unique($genres)),
+        'titlecount'            => count(array_unique($titles)),
+        'albumcount'            => count(array_unique($albums)),
+        'labelcount'            => count(array_unique($labels)),
+        'total_songs_today'     => $todaysPlays,
+        'top_artist'            => $result->artist,
+        'top_title'             => $result->title,
+        'top_plays'             => $result->num_plays,
+        'last_played'           => $result->last_played
+
     );
 
     echo json_encode($out);

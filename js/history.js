@@ -53,8 +53,8 @@ $(document).ready(function() {
             },
             {className: "title" ,  data : "title"},
             {className : "album" , data : "album"},
-            {data : "genre"},
-            {data: "loveDate",
+            {data : "genre", className: "genre"},
+            {data: "loveDate", className: "loveDate",
                 "render": function (data) {
                     var date = new Date(data);
                     var month = date.getMonth() + 1;
@@ -108,6 +108,9 @@ $(document).ready(function() {
             url : url,
             success: function( response ){
                 var content = $.parseJSON( response );
+
+                console.log(content);
+
                 $.each(content.query.pages, function(idx, v){
                     output = v.extract;
                 });
@@ -171,7 +174,8 @@ $(document).ready(function() {
                 $('.lds-heart').hide();
 
                 var content = $.parseJSON(output);
-               // console.log(content);
+
+                console.log(content);
 
                 $('.content-container').append('<h2 id=artist_name>'+content.artist.name+'</h2>');
 
@@ -343,6 +347,8 @@ $(document).ready(function() {
                 async: false,
                 success:function(data) {
                     result = $.parseJSON(data);
+                    console.log(result);
+
                 }
             });
             return result;
@@ -358,13 +364,18 @@ $(document).ready(function() {
             success:function(data) {
                 result = $.parseJSON(data);
 
+                console.log(result);
+
                 $('.stats-container').append('<div class="footerStats">' +
+                    '<span><strong>Nerdly statistics</strong></span>' +
+                    '<span>Today\'s plays: ' + result.total_songs_today + '</span>' +
                     '<span>Stations: ' + result.channelcount.toLocaleString() + '</span>'+
                     '<span>Artists: ' + result.artistcount.toLocaleString() + '</span>'+
                     '<span>Titles: ' + result.titlecount.toLocaleString() + '</span>' +
                     '<span>Albums: ' + result.albumcount.toLocaleString() + '</span>' +
                     '<span>Genres: ' + result.genrecount.toLocaleString() + '</span>' +
                     '<span>Labels: ' + result.labelcount.toLocaleString() + '</span>' +
+                    '<div class="topPlay">Top Played: '+ result.top_artist + ' "' + result.top_title + '" with ' + result.top_plays +' plays since ' + result.last_played +'</div>' +
                     '</div>');
             }
         });

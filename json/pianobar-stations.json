@@ -46,5 +46,7 @@
      {"stationName":"Rockin' Holidays Radio",
      "description":"features jazz vocals, ensemble horns, electric guitar parts, a swing feel, rock n' roll Influences and and many other similarities identified in the Music Genome Project. Christmas music, man!"},
      {"stationName":"QuickMix",
-     "description": "Features a mix of music from several stations, including some music which you don't normally get to hear, in the Music Genome Project."}
+     "description": "Features a mix of music from several stations, including some music which you don't normally get to hear, in the Music Genome Project."},
+     {"stationName":"The Classic Rock",
+         "description": "Features basic rock song structures, a subtle use of vocal harmony, repetitive melodic phrasing, major key tonality, acoustic guitar riffs, acoustic rhythm guitars, prominent organ, prominent percussion and and many other similarities identified in the Music Genome Project."}
 ]
