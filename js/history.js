@@ -139,9 +139,77 @@ $(document).ready(function() {
                 $('.content-container').append(output);
             }
         });
+    });
+
+    // Top Plays modal function
+
+    $(document).on('click', '.topLink', function(){
+        modal.style.display = "block";
+        $('.content-container').empty();
+        $('.lds-heart').hide();
+
+        $.ajax({
+            type: 'GET',
+            url: 'topPlayed.php?q=artists',
+            success: function (output) {
+               var content = $.parseJSON(output);
+                $('.content-container').append('<h1>Top Artist Plays</h1>');
+
+                var output = '<section><table class="blueTable"><thead><tr><th></th><th>Artist</th><th>Title</th><th>Plays</th></tr></thead>';
+
+                $.each( content, function(idx, v) {
+                    idx++;
+                   output += '<tr><td>'+idx+'</td><td>' + v.artist + '</td><td>'+ v.title + '</td><td>'+ v.num_plays + '</td></tr>';
+                });
+
+                output += '</table></section>';
+
+                $('.content-container').append(output);
+                $('.content-container').append('<div style="margin-top: 40px"></div>');
+
+            }
+        });
+
 
 
     });
+
+    // Display Genres Counter
+
+    $(document).on('click', '.genreLink', function(){
+        modal.style.display = "block";
+        $('.content-container').empty();
+        $('.lds-heart').hide();
+
+        $.ajax({
+            type: 'GET',
+            url: 'topPlayed.php?q=genres',
+            success: function (output) {
+                var content = $.parseJSON(output);
+                $('.content-container').append('<h1>Plays By Genre</h1>');
+
+                var output = '<section><table class="blueTable"><thead><tr><th>Genre</th><th>Plays</th></tr></thead>';
+
+                $.each( content, function(idx, v) {
+                    idx++;
+                    output += '<tr><td>' + v.genre + '</td><td>'+ v.count + '</td></tr>';
+                });
+
+                output += '</table></section>';
+
+                $('.content-container').append(output);
+                $('.content-container').append('<div style="margin-top: 40px"></div>');
+
+            }
+        });
+
+
+
+    });
+
+
+
+
 
 
     // The magic happens here to create a modal and populate it from

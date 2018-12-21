@@ -6,13 +6,18 @@
  *
  * Display total plays for an artist queried overall.
  */
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
 
 require 'mongodb/vendor/autoload.php';
+
+date_default_timezone_set('America/Chicago');
+
+
 if (isset($_GET['artist'])) {
     $artist             = $_GET['artist'];
 }
+// Declare vars
 $collection         = (new MongoDB\Client)->scottybox->pianobar;
 $collection_count   = $collection->count();
 $allSongsCount      = 0;
@@ -20,21 +25,19 @@ $station_names      = $genres = $titles = $albums = $years = $albumdata = [];
 
 if (isset($artist)):
 
-        $results            = $collection->find( ['artist' => $artist],
-                                                ['projection' =>
-                                                    [
-                                                        'artist'        => 1,
-                                                        'num_plays'     => 1,
-                                                        'title'         => 1,
-                                                        'last_played'   => 1,
-                                                        'stationName'   => 1,
-                                                        'genre'         => 1,
-                                                        'album'         => 1,
-                                                    ] ]
-                                            );
+        $results    = $collection->find( ['artist'          => $artist],
+                                         ['projection'      =>
+                                         [  'artist'        => 1,
+                                            'num_plays'     => 1,
+                                            'title'         => 1,
+                                            'last_played'   => 1,
+                                            'stationName'   => 1,
+                                            'genre'         => 1,
+                                            'album'         => 1,
+                                        ] ]);
 
-        $artistCount = $collection->count(['artist' => $artist]); // how many times does 'artist' appear in collection?
-
+        // how many times does 'artist' appear in collection?
+        $artistCount = $collection->count(['artist' => $artist]);
 
         foreach( $results as $row ){
             $allSongsCount += $row->num_plays;
@@ -47,24 +50,23 @@ if (isset($artist)):
         // tally num_plays per title
         $tCount = []; $i=0;
         foreach($titles as $t){
-            $tcounts = $collection->find([
-                                    'title' => $t],
-                                    ['projection' =>
-                                        [
-                                            'title'         => 1,
+            $tcounts = $collection->find(['title'           => $t],
+                                         ['projection'      =>
+                                         [  'title'         => 1,
                                             'stationName'   => 1,
                                             'num_plays'     => 1
                                         ],
                                     ]);
-            foreach($tcounts as $tt){
-                $i++;
-                $tCount[$i]['title']        = $tt->title;
-                $tCount[$i]['stationName']  = $tt->stationName;
-                $tCount[$i]['count']        = $tt->num_plays;
-            }
-        }
-        // spew forth json data...
 
+        foreach($tcounts as $tt){
+            $i++;
+            $tCount[$i]['title']        = $tt->title;
+            $tCount[$i]['stationName']  = $tt->stationName;
+            $tCount[$i]['count']        = $tt->num_plays;
+        } // foreach tcounts
+        } // foreac titles
+
+        // sort array by count descending
         array_multisort(array_column($tCount, 'count'), SORT_DESC, $tCount);
 
         echo json_encode(array(
@@ -88,17 +90,18 @@ else:
      */
 
     // count today's total song plays.
-    $today              = date('m').'-'.date('d').'-'.date('y');
-    $regex              = new MongoDB\BSON\Regex ($today, 'ig');
-    $todaysPlays        = $collection->count(['last_played' => $regex ] );
 
-    $glbl = $collection->find();
-    $artists = $channels = $genres = $titles = $albums = $labels =[];
+    $today              = date('m').'-'.date('d').'-'.date('y'); // 12-16-16
+    $regex              = new MongoDB\BSON\Regex ($today, 'ig');
+
+    $todaysPlays        = $collection->count(['last_played' => $regex ] );
+    $glbl               = $collection->find();
+    $artists            = $channels = $genres = $titles = $albums = $labels =[];
 
     // find the top played artist/title and num_plays
-    $filter=[];
-    $options = ['sort' => ['num_plays' => -1]]; // -1 is for DESC
-    $result = $collection->findOne($filter, $options);
+    $filter     = [];
+    $options    = ['sort' => ['num_plays' => -1]]; // -1 is for DESC
+    $result     = $collection->findOne($filter, $options);
 
     foreach($glbl as $row){
         array_push($artists, $row->artist);

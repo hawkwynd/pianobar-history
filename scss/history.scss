@@ -21,25 +21,33 @@ tfoot td{text-align: center;color: #0072a0}
 header{
   margin: 30px 0;
 
-  .menu{
-    margin: 20px 0;
-    ul{
-      padding: 0;
-      list-style-type: none;
-      margin: 20px 20px 40px 0;
-    }
-    li{
+  .flex-list {
+    overflow-x: hidden;
+  }
 
-    }
+  .flex-list ul {
+    list-style-type: none;
+    position: relative;
+    left: -1px;
+    padding: 0;
+  }
+  .flex-list li {
+    display: inline-block;
+    line-height: 1;
+    padding: 0 1em;
+    margin-bottom: 1em;
+    border-left: 1px solid #0072a0;
+  }
     a {
       color: #0072a0;
       text-decoration: none;
       float: left;
-      padding-right: 10px;
-
     }
+  a:hover{
+    color: #0000ff;
+    text-decoration: underline;
   }
-}
+  }
 
 
 // to be removed in next release

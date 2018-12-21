@@ -29,19 +29,30 @@ tfoot td {
 header {
   margin: 30px 0;
 }
-header .menu {
-  margin: 20px 0;
+header .flex-list {
+  overflow-x: hidden;
 }
-header .menu ul {
-  padding: 0;
+header .flex-list ul {
   list-style-type: none;
-  margin: 20px 20px 40px 0;
+  position: relative;
+  left: -1px;
+  padding: 0;
 }
-header .menu a {
+header .flex-list li {
+  display: inline-block;
+  line-height: 1;
+  padding: 0 1em;
+  margin-bottom: 1em;
+  border-left: 1px solid #0072a0;
+}
+header a {
   color: #0072a0;
   text-decoration: none;
   float: left;
-  padding-right: 10px;
+}
+header a:hover {
+  color: #0000ff;
+  text-decoration: underline;
 }
 
 .zoom {
@@ -599,7 +610,7 @@ h3.ytHeader {
 
 table.dataTable thead th {
   background-color: cornflowerblue;
-  padding: 10px 0px !important;
+  padding: 10px 16px !important;
 }
 
 .Pstats {
@@ -677,7 +688,7 @@ table.blueTable tfoot .links a {
   border-radius: 5px;
 }
 
-.aboutLink {
+.aboutLink, .topLink, .genreLink {
   cursor: pointer;
 }
 
@@ -1117,8 +1128,8 @@ table.blueTable tfoot .links a {
   padding: 0 10px;
 }
 .stats-container .topPlay {
-  margin-top: 20px;
-  color: #4b4b4b;
+  margin-top: 10px;
+  color: #3f3f3f;
 }
 
 /*# sourceMappingURL=style.css.map */

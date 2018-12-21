@@ -18,6 +18,7 @@
   font-size: inherit !important;
 }
 
+
 .dataTables_wrapper .dataTables_filter select{
   width: 50px;
 }
@@ -77,7 +78,8 @@
 
 // dataTable thead
 
+
 table.dataTable thead th {
-  background-color: $stationNamecolor;
-  padding: 10px 0px !important;
+  background-color: cornflowerblue;
+  padding: 10px 16px !important;
 }

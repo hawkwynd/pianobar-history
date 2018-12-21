@@ -28,9 +28,11 @@
     <h1>Pandora Reporter</h1>
 
       <header>
-        <div class="menu">
+        <div class="flex-list">
             <ul>
                 <li><a class="aboutLink">About</a></li>
+                <li><a class="topLink">Top Artist Plays</a></li>
+                <li><a class="genreLink">Plays By Genre</a></li>
             </ul>
 
         </div>

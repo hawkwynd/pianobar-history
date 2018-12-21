@@ -7,8 +7,8 @@
  * and includes wikipedia definitional info about the artist.
  * YES THIS IS THE DATAMINER!!!
  */
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+//ini_set('display_errors', 1);
+//error_reporting(E_ALL);
 
 require 'mongodb/vendor/autoload.php';
 
@@ -27,11 +27,7 @@ $dt->setTimestamp($timestamp); //adjust the object to correct timestamp
 // init our collection client
 $collection = (new MongoDB\Client)->scottybox->pianobar;
 $stations   = (new MongoDB\Client)->scottybox->stations;
-
-$results = $collection->find( ['masterId' => $masterID] );
-
-
-
+$results    = $collection->find( ['masterId' => $masterID] );
 
 
 //$pianobar->_id = (string) $results->_id;
@@ -41,6 +37,7 @@ $pianobar->master_id = $masterID;
 foreach ($results as $row) {
 
     // drop the first line of the lyrics, which leaves 2 \n\n afterwards
+
     $formatted_lyrics               = preg_replace('/^.+\n/', '', $row->lyrics);
     $pianobar->lyrics               = nl2br(preg_replace('/^.+\n\n/', '', $formatted_lyrics));
     $pianobar->metadata->coverImg   = $row->coverImg;
@@ -55,14 +52,13 @@ foreach ($results as $row) {
 
     // find stationDescription from stationName
     $stationResults = $stations->find( ['stationName' => $row->stationName ]);
+
     foreach($stationResults as $station){
         $pianobar->core->stationDescription = $station->description;
     }
 }
 
 $pianobar->core->station_plays = $collection->count( ['stationName' => $pianobar->core->stationName] );
-
-
 
 /**
  * Get the master information based on the master_id from query of search
