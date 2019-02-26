@@ -30,9 +30,12 @@ $results = $collection->findOne(
 );
 
 
-#echo "first_played : ". $results->first_played !== null ? $results->first_played : 'first_played is null.<br/>';
+$k = strtotime("now");
+echo "TIMESTAMP " . $k . "<br/>";
+echo date('m-d-y H:i', $k) . "<br/>";
 
-/*
+
+
 $results = $collection->findOneAndUpdate(
     ['$and'    =>   [
         ['artist'    => $artist],
@@ -41,15 +44,20 @@ $results = $collection->findOneAndUpdate(
     ],
     [
         '$set'  => [
-            'last_played'   => $dt->format('m-d-y g:i:s a'),
-            'first_played'  => $find->first_played !== null ? $find->first_played : $dt->format('m-d-y g:i:s a'),
-            'style'         => 'This is a test updated to see if we get our shit together.',
-            'num_plays'     => intval($find->num_plays) > 0 ? (intval($find->num_plays)+1) : $find->num_plays
+            'last_played'   => new MongoDB\BSON\UTCDateTime($k),
+            'style'         => 'This is a test updated to see if we get our shit together.'
         ]
     ],
     ['upsert', true]
 );
-*/
+
+
+
+
+
+
+echo "<hr>";
+
 
 // using _id as results for updates
 $myOid = (string) $results->_id;

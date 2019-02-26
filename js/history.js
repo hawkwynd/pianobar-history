@@ -25,9 +25,9 @@ $(document).ready(function() {
             }
         },
 
-        "lengthMenu": [[10, 20, 25, 50, 100, 200], [10, 20, 25, 50, 100, 200]],
+        "lengthMenu": [[10, 20, 25, 50, 100, 200, -1], [10, 20, 25, 50, 100, 200, "All"]],
         pageLength: 10,
-        order: [[5, "desc"]],
+        order: [[5, "asc"]],
         ajax: "mongod.php?table=pianobar",
         dataSrc: 'data',
         columns : [
@@ -56,10 +56,11 @@ $(document).ready(function() {
             {data : "genre", className: "genre"},
             {data: "loveDate", className: "loveDate",
                 "render": function (data) {
+
                     var date = new Date(data);
                     var month = date.getMonth() + 1;
-                    return (month.length > 1 ? "0" + month : month) + "/" +
-                        (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + "/" + date.getFullYear()+ "&nbsp;" +
+                    return (month  < 10 ? "0" + month : month) + "-" +
+                        (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + "-" + date.getFullYear().toString().substr(-2) + "&nbsp;" +
                         (date.getHours() < 10 ? ("0"+date.getHours()) : date.getHours())+ ":" +
                         (date.getMinutes() < 10 ? ("0"+date.getMinutes()) : date.getMinutes()) ;
                 }}
@@ -155,7 +156,7 @@ $(document).ready(function() {
                var content = $.parseJSON(output);
                 $('.content-container').append('<h1>Top Artist Plays</h1>');
 
-                var output = '<section><table class="blueTable"><thead><tr><th></th><th>Artist</th><th>Title</th><th>Plays</th></tr></thead>';
+                var output = '<section><table class="blueTable"><thead><tr><th>#</th><th>Artist</th><th>Title</th><th>Plays</th></tr></thead>';
 
                 $.each( content, function(idx, v) {
                     idx++;
@@ -208,10 +209,6 @@ $(document).ready(function() {
     });
 
 
-
-
-
-
     // The magic happens here to create a modal and populate it from
     // the json data returned by getMaster.php
     // and make a few calls back to the server for other content
@@ -243,7 +240,7 @@ $(document).ready(function() {
 
                 var content = $.parseJSON(output);
 
-                console.log(content);
+                //console.log(content);
 
                 $('.content-container').append('<h2 id=artist_name>'+content.artist.name+'</h2>');
 
